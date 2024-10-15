@@ -20,7 +20,7 @@ const LabelDetails = ({label}) => {
             return
         }
         try {
-            const response = await axios.delete(`/labels/${label._id}`, {
+            const response = await axios.delete(`https://moveout.onrender.com/labels/${label._id}`, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
