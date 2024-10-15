@@ -15,7 +15,6 @@ export default function LabelView() {
         // Replace with your QR code URL if needed
         const response = await axios.get(`https://moveout.onrender.com/labels/${id}`);
         setLabel(response.data); // Set the fetched data to state
-        console.log(response.data);
       } catch (error) {
         setError('Error fetching label data');
       }
