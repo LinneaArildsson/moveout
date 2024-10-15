@@ -5,7 +5,7 @@ const MultiMediaPlayer = ({ mediaFiles }) => {
         <div className="media-container">
             {mediaFiles.map((file, index) => {
                 const extension = file.split('.').pop().toLowerCase();
-                const fullPath = `http://localhost:5000/${file}`; // Adjust the base path as needed
+                const fullPath = `https://moveout.onrender.com/${file}`; // Adjust the base path as needed
 
                 console.log(fullPath); // Log the full path for debugging
 

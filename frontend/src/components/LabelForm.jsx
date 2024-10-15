@@ -77,7 +77,7 @@ export default function LabelForm () {
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/labels', formData, {
+      const response = await axios.post('https://moveout.onrender.com/labels', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${user.token}`
@@ -158,7 +158,7 @@ export default function LabelForm () {
           <label>Content Type:</label>
           <select value={contentType} onChange={(e) => setContentType(e.target.value)}>
             <option value="text">Text</option>
-            <option value="image">Images</option>
+            <option value="image">Image</option>
             <option value="audio">Audio</option>
           </select>
 

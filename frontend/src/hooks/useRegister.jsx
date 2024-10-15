@@ -12,7 +12,7 @@ export const useRegister = () => {
         setError(null);
 
         try {
-            const response = axios.post('http://localhost:5000/user/register', {
+            const response = axios.post('https://moveout.onrender.com/user/register', {
                 email,
                 name,
                 password

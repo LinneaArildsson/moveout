@@ -18,7 +18,7 @@ export default function Home () {
   useEffect(() => {
     const fetchLabels = async () => {
         try {
-          const response = await axios.get('http://localhost:5000/labels', {
+          const response = await axios.get('https://moveout.onrender.com/labels', {
             headers: {
               'Authorization': `Bearer ${user.token}`
             }

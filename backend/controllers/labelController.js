@@ -135,7 +135,7 @@ const createLabel = async (req, res) => {
             user_id
         });
 
-        const qrurl = `http://localhost:3000/labels/${label._id}`;
+        const qrurl = `https://moveout.onrender.com/labels/${label._id}`;
 
 
         const qrcodedataurl = await qrcode.toDataURL(qrurl);
