@@ -59,7 +59,7 @@ const getLabels = async (req, res) => {
 
 //Get a single label
 const getLabel = async (req, res) => {
-    const{id} = req.params._id;
+    const{id} = req.params;
 
     console.log(id);
 
