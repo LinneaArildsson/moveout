@@ -59,7 +59,7 @@ const getLabels = async (req, res) => {
 
 //Get a single label
 const getLabel = async (req, res) => {
-    const{id} = req.params.id;
+    const{id} = req.params._id;
 
     if(!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({error: 'No such label'})
