@@ -77,7 +77,7 @@ export default function LabelForm () {
     }
 
     try {
-      const response = await axios.post('https://moveout.onrender.com/labels', formData, {
+      const response = await axios.post('/labels', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${user.token}`

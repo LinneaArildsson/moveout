@@ -49,6 +49,7 @@ const multipleUpload = upload.fields([{ name: 'imageFiles', maxCount: 5 }, { nam
 
 //Get all labels
 const getLabels = async (req, res) => {
+    console.log(req.user);
     const user_id = req.user._id;
 
     const labels = await LabelModel.find({user_id}).sort({createdAt: -1})
@@ -135,7 +136,7 @@ const createLabel = async (req, res) => {
             user_id
         });
 
-        const qrurl = `https://moveout.onrender.com/labels/${label._id}`;
+        const qrurl = `/labels/${label._id}`;
 
 
         const qrcodedataurl = await qrcode.toDataURL(qrurl);
