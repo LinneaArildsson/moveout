@@ -426,7 +426,9 @@ form.register, form.login {
 
 .footer {
   position: fixed;
+  left: 0;
   bottom: 0;
+  width: 100%;
   background-color: var(--secondary);
   color: white;
   padding: 20px;
