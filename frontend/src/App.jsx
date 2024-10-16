@@ -1,6 +1,6 @@
 import './App.css';
 import {React} from 'react';
-import { BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate} from 'react-router-dom';
 
 //hooks
 import { useAuthContext } from './hooks/useAuthContext';
@@ -19,7 +19,7 @@ function App() {
 
   return (
     <div className='App'>
-      <BrowserRouter>
+      <HashRouter>
         <Navbar />
         <div className='pages'>
           <Routes>
@@ -31,7 +31,7 @@ function App() {
             <Route path='/labels/:id' element={<LabelView />} />
           </Routes>
         </div>
-      </BrowserRouter>
+      </HashRouter>
     </div>
 
   );
