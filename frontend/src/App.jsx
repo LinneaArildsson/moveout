@@ -12,6 +12,7 @@ import Register from '../src/pages/Register';
 import Login from '../src/pages/Login';
 
 import LabelView from './components/LabelView';
+import Footer from './components/Footer';
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
             <Route path='/labels/:id' element={<LabelView />} />
           </Routes>
         </div>
+        <Footer />
       </HashRouter>
     </div>
 

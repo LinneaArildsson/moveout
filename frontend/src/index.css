@@ -424,6 +424,19 @@ form.register, form.login {
   cursor: pointer;
 }
 
+.footer {
+  background-color: #333;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
 
 /* Media Queries */
 @media (max-width: 768px) {
