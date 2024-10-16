@@ -5,7 +5,7 @@ const MultiMediaPlayer = ({ mediaFiles }) => {
         <div className="media-container">
             {mediaFiles.map((file, index) => {
                 const extension = file.split('.').pop().toLowerCase();
-                const fullPath = `https://moveout.onrender.com/${file}`; // Adjust the base path as needed
+                const fullPath = `https://moveout.onrender.com/${file}`;
 
                 console.log(fullPath); // Log the full path for debugging
 
@@ -20,7 +20,7 @@ const MultiMediaPlayer = ({ mediaFiles }) => {
                     // Render audio players
                     return (
                         <div key={index} className="media-item">
-                            <p>{file.split('\\').pop()}</p>
+                            <p>{file.split('/').pop()}</p>
                             <audio controls>
                                 <source src={fullPath} type={`audio/${extension}`} />
                                 Your browser does not support the audio tag.
