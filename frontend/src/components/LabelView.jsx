@@ -12,6 +12,7 @@ export default function LabelView() {
   useEffect(() => {
     const fetchLabel = async () => {
       try {
+        console.log("Label ID: ", id);
         // Replace with your QR code URL if needed
         const response = await axios.get(`https://moveout.onrender.com/labels/${id}`);
         console.log(response.data);
@@ -35,6 +36,7 @@ export default function LabelView() {
   return (
     <div className="label-view-container">
       <h1>{label.title}</h1>
+      <p>ID: {id}</p>
       
       <div className="label-design">
         <strong>Design:</strong> <span>{label.design}</span>
