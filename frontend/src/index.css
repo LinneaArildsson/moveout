@@ -425,7 +425,9 @@ form.register, form.login {
 }
 
 .footer {
-  background-color: #333;
+  position: fixed;
+  bottom: 0;
+  background-color: var(--secondary);
   color: white;
   padding: 20px;
   text-align: center;
