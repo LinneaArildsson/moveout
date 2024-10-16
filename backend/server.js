@@ -9,7 +9,9 @@ const userRoutes = require('./routes/usersRoute');
 const app = express();
 
 //Middleware
-app.use(cors());
+app.use(cors({
+  origin: 'https://moveoutapp.onrender.com', // Set this to your frontend domain
+}));
 app.use(express.json());
 
 app.use('/uploads', express.static('uploads')); // Serve static files
