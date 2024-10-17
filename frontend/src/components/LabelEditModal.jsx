@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import Modal from './Modal';
 import { useLabelContext } from '../hooks/useLabelsContext';
@@ -63,14 +63,14 @@ const LabelEditModal = ({ label, onClose }) => {
     const removeAudioFile = (index) => {
         const updatedAudioFiles = [...audioFiles];
         const removedFile = updatedAudioFiles.splice(index, 1)[0];
-        setRemovedAudioFiles([...removedAudioFiles, removedFile]);
+        setRemovedAudioFiles((prev) => [...prev, removedFile]);
         setAudioFiles(updatedAudioFiles);
     };
 
     const removeImageFile = (index) => {
         const updatedImageFiles = [...imageFiles];
         const removedFile = updatedImageFiles.splice(index, 1)[0];
-        setRemovedImageFiles([...removedImageFiles, removedFile]);
+        setRemovedImageFiles((prev) => [...prev, removedFile]);
         setImageFiles(updatedImageFiles);
     };
 
@@ -84,11 +84,11 @@ const LabelEditModal = ({ label, onClose }) => {
                         type="text" 
                         value={title} 
                         onChange={(e) => setTitle(e.target.value)} 
-                        required // Basic validation
+                        required
                     />
                     <label>Content List</label>
                     {textList.map((item, index) => (
-                        <div key={item + index}> {/* Use a unique key */}
+                        <div key={index}>
                             <input 
                                 type="text" 
                                 value={item} 
@@ -97,7 +97,7 @@ const LabelEditModal = ({ label, onClose }) => {
                                     newTextList[index] = e.target.value;
                                     setTextList(newTextList);
                                 }} 
-                                required // Basic validation
+                                required
                             />
                             <button type="button" onClick={() => setTextList(textList.filter((_, i) => i !== index))}>Delete</button>
                         </div>
@@ -105,8 +105,8 @@ const LabelEditModal = ({ label, onClose }) => {
                     <button type="button" onClick={() => setTextList([...textList, ''])}>Add Content</button>
                     <label>Existing Audio Files</label>
                     {audioFiles.map((file, index) => (
-                        <div key={file + index}>
-                            <span>{file}</span>
+                        <div key={index}>
+                            <span>{file.name || file}</span> {/* Display file name */}
                             <button type="button" onClick={() => removeAudioFile(index)}>Remove</button>
                         </div>
                     ))}
@@ -119,8 +119,8 @@ const LabelEditModal = ({ label, onClose }) => {
                     />
                     <label>Existing Image Files</label>
                     {imageFiles.map((file, index) => (
-                        <div key={file + index}>
-                            <span>{file}</span>
+                        <div key={index}>
+                            <span>{file.name || file}</span> {/* Display file name */}
                             <button type="button" onClick={() => removeImageFile(index)}>Remove</button>
                         </div>
                     ))}
