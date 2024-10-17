@@ -173,19 +173,40 @@ const deleteLabel = async (req, res) => {
 const updateLabel = async (req, res) => {
     const {id} = req.params
 
+    // Check if the ID is valid
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({error: 'No such label'})
+        return res.status(400).json({ error: 'Invalid label ID' });
     }
 
-    const label = await LabelModel.findOneAndUpdate({_id: id}, {
-        ...req.body
-    })
-
-    if (!label) {
-        return res.status(400).json({error: 'No such label'})
+    // Check if the body is empty
+    if (Object.keys(req.body).length === 0) {
+        return res.status(400).json({ error: 'No data provided for update' });
     }
 
-    res.status(200).json(label)
+    try {
+        // Find the label to check ownership (if applicable)
+        const label = await Label.findById(id);
+        if (!label) {
+          return res.status(404).json({ error: 'Label not found' });
+        }
+    
+        // Authorization: Ensure the logged-in user owns the label
+        if (label.user_id.toString() !== req.user._id.toString()) {
+          return res.status(403).json({ error: 'You are not authorized to update this label' });
+        }
+    
+        // Update the label with only the passed fields
+        const updatedLabel = await Label.findByIdAndUpdate(
+          id,
+          { $set: req.body },  // Only updates the fields that are passed
+          { new: true }        // Returns the updated document
+        );
+    
+        res.json(updatedLabel);
+    } catch (err) {
+        console.error(err); // Log the error for debugging
+        res.status(500).json({ error: 'Failed to update label' });
+    }
 }
 
 module.exports = {

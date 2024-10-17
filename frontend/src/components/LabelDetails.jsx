@@ -6,6 +6,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 
 import MultiMediaPlayer from './MultiMediaPlayer';
+import LabelEditModal from "./LabelEditModal";
 
 //style
 import deleteIcon from '../style/trash.png';
@@ -14,6 +15,8 @@ import editIcon from '../style/edit.png';
 const LabelDetails = ({label}) => {
     const {dispatch} = useLabelContext();
     const {user} = useAuthContext();
+
+    const [showEditModal, setShowEditModal] = useState(false);
 
     const handleClick = async () => {
         if (!user) {
@@ -32,6 +35,11 @@ const LabelDetails = ({label}) => {
             console.error('Error deleting label:', error);
         }
     }
+
+    const handleSave = (updatedFields) => {
+        // Merge the updated fields with the existing label data
+        dispatch({ type: 'UPDATE_LABEL', payload: { ...label, ...updatedFields } });
+      };
 
     const handlePrint = () => {
         const printWindow = window.open('', '_blank');
@@ -115,7 +123,7 @@ const LabelDetails = ({label}) => {
                 <button className="print-label" onClick={handlePrint}>Print Label</button>
 
                 <div className="icon-container">
-                    <button className="edit-icon" onClick={handleClick} aria-label="Edit label">
+                    <button className="edit-icon" onClick={() => setShowEditModal(true)} aria-label="Edit label">
                         <img src={editIcon} alt="Edit" className="edit-icon-img" />
                     </button>
 
@@ -123,6 +131,15 @@ const LabelDetails = ({label}) => {
                         <img src={deleteIcon} alt="Delete" className="delete-icon-img" />
                     </button>
                 </div>
+
+                {/* Show Edit Modal */}
+                {showEditModal && (
+                <LabelEditModal 
+                    label={label}
+                    onClose={() => setShowEditModal(false)}
+                    onSave={handleSave}
+                />
+                )}
 
             </div>
         </div>       
