@@ -23,6 +23,8 @@ export default function Home () {
               'Authorization': `Bearer ${user.token}`
             }
           });
+
+          console.log("USER TOKEN: ", user.token)
     
           dispatch({type: 'SET_LABELS', payload: response.data})
 
