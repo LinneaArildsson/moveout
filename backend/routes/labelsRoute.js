@@ -28,6 +28,6 @@ router.post('/', multipleUpload, createLabel);
 router.delete('/:id', deleteLabel);
 
 // UPDATE a label
-router.patch('/:id', updateLabel);
+router.patch('/:id', multipleUpload, updateLabel);
 
 module.exports = router;
