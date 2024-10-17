@@ -171,7 +171,7 @@ const deleteLabel = async (req, res) => {
 
 //Update a label
 const updateLabel = async (req, res) => {
-    const {id} = req.params
+    const { id } = req.params;
 
     // Check if the ID is valid
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -179,35 +179,62 @@ const updateLabel = async (req, res) => {
     }
 
     // Check if the body is empty
-    if (Object.keys(req.body).length === 0) {
+    if (Object.keys(req.body).length === 0 && !req.files) {
         return res.status(400).json({ error: 'No data provided for update' });
     }
 
     try {
-        // Find the label to check ownership (if applicable)
-        const label = await Label.findById(id);
+        // Find the label to check ownership
+        const label = await LabelModel.findById(id);
         if (!label) {
-          return res.status(404).json({ error: 'Label not found' });
+            return res.status(404).json({ error: 'Label not found' });
         }
-    
+
         // Authorization: Ensure the logged-in user owns the label
         if (label.user_id.toString() !== req.user._id.toString()) {
-          return res.status(403).json({ error: 'You are not authorized to update this label' });
+            return res.status(403).json({ error: 'You are not authorized to update this label' });
         }
-    
+
+        // Prepare update data
+        const updateData = {};
+        if (req.body.title) updateData.title = req.body.title;
+
+        // Parse textList back into an array
+        if (req.body.textList) {
+            try {
+                updateData.textList = JSON.parse(req.body.textList);
+            } catch (error) {
+                return res.status(400).json({ error: 'Invalid textList format' });
+            }
+        }
+
+        // Handle file uploads
+        if (req.files) {
+            if (req.files.audioFiles) {
+                const audioFilePaths = req.files.audioFiles.map(file => file.path);
+                updateData.audioFiles = audioFilePaths; // Update with new audio file paths
+            }
+            if (req.files.imageFiles) {
+                const imageFilePaths = req.files.imageFiles.map(file => file.path);
+                updateData.imageFiles = imageFilePaths; // Update with new image file paths
+            }
+        }
+
         // Update the label with only the passed fields
-        const updatedLabel = await Label.findByIdAndUpdate(
-          id,
-          { $set: req.body },  // Only updates the fields that are passed
-          { new: true }        // Returns the updated document
+        const updatedLabel = await LabelModel.findByIdAndUpdate(
+            id,
+            { $set: updateData },
+            { new: true }
         );
-    
-        res.json(updatedLabel);
+
+        res.status(200).json(updatedLabel);
     } catch (err) {
         console.error(err); // Log the error for debugging
         res.status(500).json({ error: 'Failed to update label' });
     }
-}
+};
+
+
 
 module.exports = {
     getLabels,
