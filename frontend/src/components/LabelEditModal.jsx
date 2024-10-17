@@ -22,11 +22,6 @@ export default function LabelEditModal({ label }) {
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => {
-    setTitle('');
-    setDesign('');
-    setTextList('');
-    setImageFiles([]);
-    setAudioFiles([]);
     setIsModalOpen(false);
   };
 
@@ -99,7 +94,7 @@ export default function LabelEditModal({ label }) {
 
           <label>Select Design:</label>
           <div className='radio-group'>
-            {['design1', 'design2', 'design3'].map((designOption) => (
+            {['General', 'Heavy', 'Fragile'].map((designOption) => (
               <div key={designOption}>
                 <input
                   type="radio"
