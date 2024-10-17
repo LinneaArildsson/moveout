@@ -1,22 +1,19 @@
 import axios from "axios";
-import {React, useState} from 'react';
+import {React} from 'react';
 import { useLabelContext } from "../hooks/useLabelsContext";
 import { useAuthContext } from "../hooks/useAuthContext";
 
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 
 import MultiMediaPlayer from './MultiMediaPlayer';
-import LabelEditModal from "./LabelEditModal";
 
 //style
 import deleteIcon from '../style/trash.png';
-import editIcon from '../style/edit.png';
+import LabelEditModal from "./LabelEditModal";
 
 const LabelDetails = ({label}) => {
     const {dispatch} = useLabelContext();
     const {user} = useAuthContext();
-
-    const [showEditModal, setShowEditModal] = useState(false);
 
     const handleClick = async () => {
         if (!user) {
@@ -118,22 +115,12 @@ const LabelDetails = ({label}) => {
                 <button className="print-label" onClick={handlePrint}>Print Label</button>
 
                 <div className="icon-container">
-                    <button className="edit-icon" onClick={() => setShowEditModal(true)} aria-label="Edit label">
-                        <img src={editIcon} alt="Edit" className="edit-icon-img" />
-                    </button>
+                    <LabelEditModal label={label} />
 
                     <button className="delete-icon" onClick={handleClick} aria-label="Delete label">
                         <img src={deleteIcon} alt="Delete" className="delete-icon-img" />
                     </button>
                 </div>
-
-                {/* Show Edit Modal */}
-                {showEditModal && (
-                    <LabelEditModal 
-                        label={label}
-                        onClose={() => setShowEditModal(false)}
-                    />
-                )}
 
             </div>
         </div>       
