@@ -214,15 +214,15 @@ input.error {
   border: 1px solid var(--error);
 }
 
-.icon-container {
+.edit-icon{
   position: absolute;
   top: 1rem;
-  right: 1rem;
+  right: 3rem;
   display: flex;
   gap: 1rem;
 }
 
-.edit-icon{
+.delete-icon{
   position: absolute;
   top: 1rem;
   right: 1rem;
