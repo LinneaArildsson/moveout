@@ -118,27 +118,27 @@ export default function LabelForm () {
           <div className='radio-group'>
             <input
               type="radio"
-              value="design1"
-              checked={design === 'design1'}
-              onChange={() => setDesign('design1')}
+              value="General"
+              checked={design === 'General'}
+              onChange={() => setDesign('General')}
             />
             <label>Design 1</label>
           </div>
           <div className='radio-group'>
             <input
               type="radio"
-              value="design2"
-              checked={design === 'design2'}
-              onChange={() => setDesign('design2')}
+              value="Heavy"
+              checked={design === 'Heavy'}
+              onChange={() => setDesign('Heavy')}
             />
             <label>Design 2</label>
           </div>
           <div className='radio-group'>
             <input
               type="radio"
-              value="design3"
-              checked={design === 'design3'}
-              onChange={() => setDesign('design3')}
+              value="Fragile"
+              checked={design === 'Fragile'}
+              onChange={() => setDesign('Fragile')}
             />
             <label>Design 3</label>
           </div>
