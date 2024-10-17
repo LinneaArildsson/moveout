@@ -32,18 +32,6 @@ export default function LabelForm () {
     setIsModalOpen(false);
   }
 
-  // // Handler for updating content list items
-  // const handleContentChange = (index, value) => {
-  //   const newContent = [...content];
-  //   newContent[index] = value;
-  //   setContent(newContent);
-  // };
-
-  // // Handler for adding a new content item (new text field)
-  // const addContentItem = () => {
-  //   setContent([...content, '']);
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -196,9 +184,6 @@ export default function LabelForm () {
               />
             </div>
           )}
-          {/* <button className='modal-button-list' type="button" onClick={addContentItem}>
-            Add Item
-          </button> */}
 
           <button className="modal-button-add" type="submit">Add Label</button>
           {error && <div className="error">{error}</div>}

@@ -36,10 +36,23 @@ const LabelDetails = ({label}) => {
         }
     }
 
-    const handleSave = (updatedFields) => {
-        // Merge the updated fields with the existing label data
-        dispatch({ type: 'UPDATE_LABEL', payload: { ...label, ...updatedFields } });
-      };
+    const handleSave = async (updatedFields) => {
+        try {
+            const response = await axios.patch(`https://moveout.onrender.com/labels/${label._id}`, updatedFields, {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.status === 200) {
+                dispatch({ type: 'UPDATE_LABEL', payload: response.data });
+                setShowEditModal(false); // Close the modal after saving
+            }
+        } catch (error) {
+            console.error('Error updating label:', error);
+        }
+    };
 
     const handlePrint = () => {
         const printWindow = window.open('', '_blank');
@@ -134,11 +147,11 @@ const LabelDetails = ({label}) => {
 
                 {/* Show Edit Modal */}
                 {showEditModal && (
-                <LabelEditModal 
-                    label={label}
-                    onClose={() => setShowEditModal(false)}
-                    onSave={handleSave}
-                />
+                    <LabelEditModal 
+                        label={label}
+                        onClose={() => setShowEditModal(false)}
+                        onSave={handleSave}
+                    />
                 )}
 
             </div>
