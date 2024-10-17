@@ -150,7 +150,7 @@ const LabelDetails = ({label}) => {
                     <LabelEditModal 
                         label={label}
                         onClose={() => setShowEditModal(false)}
-                        onSave={handleSave}
+                        onSave={(updatedFields) => handleSave(updatedFields)}
                     />
                 )}
 

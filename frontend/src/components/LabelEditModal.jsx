@@ -1,8 +1,6 @@
 import { React, useState } from 'react';
 import axios from 'axios';
-
 import Modal from './Modal';
-
 import { useLabelContext } from '../hooks/useLabelsContext';
 import { useAuthContext } from '../hooks/useAuthContext';
 
@@ -21,28 +19,27 @@ const LabelEditModal = ({ label, onClose }) => {
     const [error, setError] = useState(null);
 
     const handleCloseModal = () => {
+        // Reset states
         setTitle(label.title);
         setTextList([...label.textList]);
         setAudioFiles([...label.audioFiles]);
         setImageFiles([...label.imageFiles]);
         setRemovedAudioFiles([]);
         setRemovedImageFiles([]);
-        onClose(); // Close the modal
+        onClose();
     };
 
     const handleSave = async (e) => {
         e.preventDefault();
         const formData = new FormData();
-        formData.append('title', title);
-        formData.append('textList', textList.join(','));
 
-        // Append new files to formData
+        // Append data to formData
+        formData.append('title', title);
+        formData.append('textList', JSON.stringify(textList)); // Send as JSON array
         newAudioFiles.forEach((file) => formData.append('audioFiles', file));
         newImageFiles.forEach((file) => formData.append('imageFiles', file));
-
-        // Send removed file names/IDs for deletion
-        formData.append('removedAudioFiles', removedAudioFiles.join(','));
-        formData.append('removedImageFiles', removedImageFiles.join(','));
+        formData.append('removedAudioFiles', JSON.stringify(removedAudioFiles)); // Send as JSON array
+        formData.append('removedImageFiles', JSON.stringify(removedImageFiles)); // Send as JSON array
 
         try {
             const response = await axios.patch(`https://moveout.onrender.com/labels/${label._id}`, formData, {
@@ -51,10 +48,8 @@ const LabelEditModal = ({ label, onClose }) => {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-
-            // Dispatch the updated label to the context
             dispatch({ type: 'UPDATE_LABEL', payload: response.data });
-            onClose(); // Close the modal after saving
+            onClose();
         } catch (error) {
             console.error('Error updating label:', error);
             setError('An error occurred while updating the label.');
@@ -84,17 +79,16 @@ const LabelEditModal = ({ label, onClose }) => {
             <Modal isOpen={true} onClose={handleCloseModal}>
                 <div className='edit-label'><h2>Edit Label</h2></div>
                 <form onSubmit={handleSave}>
-                    {/* Title Input */}
                     <label>Title</label>
                     <input 
                         type="text" 
                         value={title} 
                         onChange={(e) => setTitle(e.target.value)} 
+                        required // Basic validation
                     />
-                    {/* Text List Input */}
                     <label>Content List</label>
                     {textList.map((item, index) => (
-                        <div key={index}>
+                        <div key={item + index}> {/* Use a unique key */}
                             <input 
                                 type="text" 
                                 value={item} 
@@ -103,20 +97,19 @@ const LabelEditModal = ({ label, onClose }) => {
                                     newTextList[index] = e.target.value;
                                     setTextList(newTextList);
                                 }} 
+                                required // Basic validation
                             />
-                            <button onClick={() => setTextList(textList.filter((_, i) => i !== index))}>Delete</button>
+                            <button type="button" onClick={() => setTextList(textList.filter((_, i) => i !== index))}>Delete</button>
                         </div>
                     ))}
                     <button type="button" onClick={() => setTextList([...textList, ''])}>Add Content</button>
-                    {/* Existing Audio Files */}
                     <label>Existing Audio Files</label>
                     {audioFiles.map((file, index) => (
-                        <div key={index}>
+                        <div key={file + index}>
                             <span>{file}</span>
                             <button type="button" onClick={() => removeAudioFile(index)}>Remove</button>
                         </div>
                     ))}
-                    {/* New Audio File Input */}
                     <label>Upload New Audio Files</label>
                     <input
                         type="file"
@@ -124,15 +117,13 @@ const LabelEditModal = ({ label, onClose }) => {
                         multiple
                         onChange={(e) => handleFileChange(e, setNewAudioFiles)}
                     />
-                    {/* Existing Image Files */}
                     <label>Existing Image Files</label>
                     {imageFiles.map((file, index) => (
-                        <div key={index}>
+                        <div key={file + index}>
                             <span>{file}</span>
                             <button type="button" onClick={() => removeImageFile(index)}>Remove</button>
                         </div>
                     ))}
-                    {/* New Image File Input */}
                     <label>Upload New Image Files</label>
                     <input
                         type="file"
