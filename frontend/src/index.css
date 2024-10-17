@@ -217,7 +217,7 @@ input.error {
 .edit-icon{
   position: absolute;
   top: 1rem;
-  right: 3rem;
+  right: 4rem;
   display: flex;
   gap: 1rem;
 }
