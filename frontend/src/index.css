@@ -222,6 +222,14 @@ input.error {
   gap: 1rem;
 }
 
+.edit-icon{
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  gap: 1rem;
+}
+
 .edit-icon, .delete-icon {
   cursor: pointer;
   border: 2px solid var(--secondary);
