@@ -431,7 +431,7 @@ form.register, form.login {
   width: 100%;
   background-color: var(--secondary);
   color: white;
-  padding: 20px;
+  padding: 1rem;
   text-align: center;
 }
 
