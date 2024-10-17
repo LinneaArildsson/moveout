@@ -122,7 +122,7 @@ export default function LabelForm () {
               checked={design === 'General'}
               onChange={() => setDesign('General')}
             />
-            <label>Design 1</label>
+            <label>General</label>
           </div>
           <div className='radio-group'>
             <input
@@ -131,7 +131,7 @@ export default function LabelForm () {
               checked={design === 'Heavy'}
               onChange={() => setDesign('Heavy')}
             />
-            <label>Design 2</label>
+            <label>Heavy</label>
           </div>
           <div className='radio-group'>
             <input
@@ -140,7 +140,7 @@ export default function LabelForm () {
               checked={design === 'Fragile'}
               onChange={() => setDesign('Fragile')}
             />
-            <label>Design 3</label>
+            <label>Fragile</label>
           </div>
 
           <label>Content Type:</label>
