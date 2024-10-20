@@ -1,6 +1,8 @@
 const UserModel = require('../models/User')
 const jwt = require('jsonwebtoken')
 
+const LabelModel = require('../models/Label')
+
 const createToken = (_id) => {
     return jwt.sign({_id}, process.env.JWT_SECRET_KEY, {expiresIn: '3d'})
 }
@@ -58,11 +60,19 @@ const getAllUsers = async (req, res) => {
   }
 
   try {
+    // Fetch all users
     const users = await UserModel.find({});
-    res.status(200).json(users);
+
+    // Fetch labels for each user and attach them
+    const usersWithLabels = await Promise.all(users.map(async (user) => {
+      const labels = await LabelModel.find({ userId: user._id }); // Assuming 'userId' is the reference field
+      return { ...user.toObject(), labels }; // Convert Mongoose object to plain JS object
+    }));
+
+    res.status(200).json(usersWithLabels);
   } catch (error) {
     console.error('Error fetching users:', error);
-    res.status(500).json({error: 'Error fetching users'});
+    res.status(500).json({ error: 'Error fetching users' });
   }
 }
 

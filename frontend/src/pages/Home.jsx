@@ -63,24 +63,47 @@ export default function Home () {
   return (
     <div className="home">
       {user.isAdmin ? (
-        // Display only users for admin
-        <>
-          <h3>All Users</h3>
+        // Display table of users and their labels for admin
+        <div>
+          <h3>All Users and Their Labels</h3>
           {error && <p className="error">{error}</p>}
-          <ul>
-            {users.map((user) => (
-              <li key={user._id}>{user.name} - {user.email}</li>
-            ))}
-          </ul>
-        </>
+          <table>
+            <thead>
+              <tr>
+                <th>User Name</th>
+                <th>Email</th>
+                <th>Labels</th>
+              </tr>
+            </thead>
+            <tbody>
+              {users.map((user) => (
+                <tr key={user._id}>
+                  <td>{user.name || 'No name'}</td>
+                  <td>{user.email}</td>
+                  <td>
+                    <ul>
+                      {user.labels && user.labels.length > 0 ? (
+                        user.labels.map((label) => (
+                          <li key={label._id}>{label.title || 'No title'}</li>
+                        ))
+                      ) : (
+                        <li>No labels</li>
+                      )}
+                    </ul>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       ) : (
         // Display greeting, email, label form, and labels for regular users
         <>
-          {greeting && <h2 className='greeting'>{greeting}</h2>}
-          <p className='user-email'>{'Logged in: ' + user.email}</p>
+          {greeting && <h2 className="greeting">{greeting}</h2>}
+          <p className="user-email">{'Logged in: ' + user.email}</p>
           <LabelForm />
           <div className="label-container">
-            {labels && labels.map(label => (
+            {labels && labels.map((label) => (
               <LabelDetails label={label} key={label._id} />
             ))}
           </div>
