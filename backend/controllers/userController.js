@@ -51,16 +51,18 @@ const registerUser = async (req, res) => {
 
 // Get all users for admin
 const getAllUsers = async (req, res) => {
-  try {
-      // Check if the user is an admin
-      if (!req.user.isAdmin) {
-          return res.status(403).json({ error: 'Access denied' });
-      }
+  console.log(`User isAdmin: ${req.user.isAdmin}`);
 
-      const users = await UserModel.find(); // Retrieve all users
-      res.status(200).json(users);
+  if (!req.user.isAdmin) {
+    return res.status(403).json({error: 'Access denied'});
+  }
+
+  try {
+    const users = await UserModel.find({});
+    res.status(200).json(users);
   } catch (error) {
-      res.status(500).json({ error: 'Internal Server Error' });
+    console.error('Error fetching users:', error);
+    res.status(500).json({error: 'Error fetching users'});
   }
 }
 
