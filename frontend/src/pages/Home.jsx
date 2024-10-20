@@ -36,7 +36,7 @@ export default function Home () {
 
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('https://moveout.onrender.com/users/admin', {
+        const response = await axios.get('https://moveout.onrender.com/user/admin', {
           headers: {
             'Authorization': `Bearer ${user.token}`,
           },
