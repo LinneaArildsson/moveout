@@ -15,6 +15,10 @@ const UserSchema = new mongoose.Schema({
     password: {
       type: String,
       required: true
+    },
+    isAdmin: {  // New field to identify if a user is an admin
+      type: Boolean,
+      default: false
     }
 });
 
@@ -39,7 +43,7 @@ UserSchema.statics.registerUsers = async function(email, name, password) {
   const salt = await bcrypt.genSalt(10)
   const hash = await bcrypt.hash(password, salt)
 
-  const user = await this.create({email, name, password: hash})
+  const user = await this.create({email, name, password: hash, isAdmin: false})
 
   return user
 }

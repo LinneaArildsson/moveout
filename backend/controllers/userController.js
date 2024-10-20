@@ -15,9 +15,10 @@ const loginUser = async (req, res) => {
     const token = createToken(user._id)
 
     res.status(200).json({
-      email: user.email, // Assuming email is part of the user object
-      name: user.name, // Include the user's name here
+      email: user.email,
+      name: user.name,
       token,
+      isAdmin: user.isAdmin
     });
   } catch (error) {
     res.status(400).json({error: error.message})
@@ -31,16 +32,37 @@ const registerUser = async (req, res) => {
   try {
     const user = await UserModel.registerUsers(email, name, password)
 
+    // Set isAdmin to false by default
+    user.isAdmin = false;
+    await user.save();
+
     const token = createToken(user._id)
 
     res.status(200).json({
       email: user.email,
-      name: user.name, // Include the user's name here
+      name: user.name,
       token,
+      isAdmin: user.isAdmin
     });
   } catch (error) {
     res.status(400).json({error: error.message})
   }
 }
+
+// Get all users for admin
+const getAllUsers = async (req, res) => {
+  try {
+      // Check if the user is an admin
+      if (!req.user.isAdmin) {
+          return res.status(403).json({ error: 'Access denied' });
+      }
+
+      const users = await UserModel.find(); // Retrieve all users
+      res.status(200).json(users);
+  } catch (error) {
+      res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+
   
-module.exports = { registerUser, loginUser }
+module.exports = { registerUser, loginUser, getAllUsers }
