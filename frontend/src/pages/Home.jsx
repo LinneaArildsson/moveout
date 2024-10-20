@@ -15,6 +15,9 @@ export default function Home () {
 
   const [greeting, setGreeting] = useState('');
 
+  const [users, setUsers] = useState([]); // State for storing users
+  const [error, setError] = useState(''); // State for error handling
+
   useEffect(() => {
     const fetchLabels = async () => {
         try {
