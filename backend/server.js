@@ -11,6 +11,7 @@ const app = express();
 //Middleware
 app.use(cors({
   origin: 'https://moveoutapp.onrender.com', // Set this to your frontend domain
+  credentials: true, // Allow credentials such as cookies
 }));
 app.use(express.json());
 
