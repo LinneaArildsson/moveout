@@ -65,7 +65,7 @@ const getAllUsers = async (req, res) => {
 
     // Fetch labels for each user and attach them
     const usersWithLabels = await Promise.all(users.map(async (user) => {
-      const labels = await LabelModel.find({ userId: user._id }); // Assuming 'userId' is the reference field
+      const labels = await LabelModel.find({ user_id: user._id }); // Assuming 'userId' is the reference field
       return { ...user.toObject(), labels }; // Convert Mongoose object to plain JS object
     }));
 
