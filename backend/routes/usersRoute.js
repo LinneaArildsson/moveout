@@ -15,7 +15,7 @@ router.post('/register', registerUser)
 // Admin route to get all users
 router.get('/admin', requireAuth, getAllUsers); // Protecting this route
 
-router.post('/verify/:token', verifyUser);
+router.get('/verify/:token', verifyUser);
 
 // Route for resending verification email
 router.post('/resend-verification', resendVerification);

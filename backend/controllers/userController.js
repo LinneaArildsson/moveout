@@ -123,7 +123,7 @@ const sendVerificationEmail = async (user, token) => {
 };
 
 const verifyUser = async (req, res) => {
-  const { token } = req.params.token;
+  const { token } = req.params;
 
   console.log("Verify Token: ", token);
 
@@ -142,9 +142,9 @@ const verifyUser = async (req, res) => {
     user.verificationTokenExpires = undefined; 
     await user.save();
 
-    res.status(200).json({ message: 'Account verified successfully' });
+    return res.status(200).send('<h1>Account verified successfully!</h1>');
   } catch (error) {
-    res.status(500).json({ error: 'Error verifying account' });
+    return res.status(500).json({ error: 'Error verifying account' });
   }
 };
 
