@@ -49,13 +49,14 @@ const registerUser = async (req, res) => {
       const { token, expires } = generateVerificationToken();
       user.verificationToken = token;
       user.verificationTokenExpires = expires;
+      await user.save();
       await sendVerificationEmail(user, token); // Send verification email
     }
 
     await user.save();
 
     // Send verification email
-    await sendVerificationEmail(user, token);
+    //await sendVerificationEmail(user, token);
 
     const jwttoken = createToken(user._id)
 
