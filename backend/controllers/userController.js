@@ -105,7 +105,7 @@ const sendVerificationEmail = async (user, token) => {
     },
   });
 
-  const verificationUrl = `https://moveoutapp.onrender.com/user/verify/${token}`;
+  const verificationUrl = `https://moveout.onrender.com/user/verify/${token}`;
 
   const mailOptions = {
     from: process.env.EMAIL_USER,
