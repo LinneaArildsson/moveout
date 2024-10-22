@@ -67,6 +67,7 @@ const registerUser = async (req, res) => {
       isVerified: user.isVerified
     });
   } catch (error) {
+    console.log("REGISTER ERROR: ", error.message)
     res.status(400).json({error: error.message})
   }
 }
