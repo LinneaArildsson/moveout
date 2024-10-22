@@ -6,6 +6,8 @@ const LabelModel = require('../models/Label')
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 
+require("dotenv").config()
+
 const createToken = (_id) => {
     return jwt.sign({_id}, process.env.JWT_SECRET_KEY, {expiresIn: '3d'})
 }
