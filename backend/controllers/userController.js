@@ -123,7 +123,7 @@ const sendVerificationEmail = async (user, token) => {
 };
 
 const verifyUser = async (req, res) => {
-  const { token } = req.params;
+  const { token } = req.params.token;
 
   try {
     const user = await UserModel.findOne({ verificationToken: token });
