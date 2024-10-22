@@ -3,6 +3,9 @@ const jwt = require('jsonwebtoken')
 
 const LabelModel = require('../models/Label')
 
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
+
 const createToken = (_id) => {
     return jwt.sign({_id}, process.env.JWT_SECRET_KEY, {expiresIn: '3d'})
 }
@@ -36,15 +39,24 @@ const registerUser = async (req, res) => {
 
     // Set isAdmin to false by default
     user.isAdmin = false;
+
+    const { token, expires } = generateVerificationToken();
+    user.verificationToken = token;
+    user.verificationTokenExpires = expires;
+
     await user.save();
 
-    const token = createToken(user._id)
+    // Send verification email
+    await sendVerificationEmail(user, token);
+
+    const jwttoken = createToken(user._id)
 
     res.status(200).json({
       email: user.email,
       name: user.name,
-      token,
-      isAdmin: user.isAdmin
+      token: jwttoken,
+      isAdmin: user.isAdmin,
+      isVerified: user.isVerified
     });
   } catch (error) {
     res.status(400).json({error: error.message})
@@ -76,5 +88,81 @@ const getAllUsers = async (req, res) => {
   }
 }
 
+const generateVerificationToken = () => {
+  const token = crypto.randomBytes(20).toString('hex');
+  const expires = Date.now() + 24 * 60 * 60 * 1000; // Token expires in 24 hours
+  return { token, expires };
+};
+
+const sendVerificationEmail = async (user, token) => {
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+
+  const verificationUrl = `https://moveoutapp.onrender.com/user/verify/${token}`;
+
+  const mailOptions = {
+    from: process.env.EMAIL_USER,
+    to: user.email,
+    subject: 'Verify your account',
+    text: `Please verify your account by clicking the following link: ${verificationUrl}`,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log('Verification email sent to ' + user.email);
+  } catch (error) {
+    console.error('Error sending verification email:', error);
+  }
+};
+
+const verifyUser = async (req, res) => {
+  const { token } = req.params;
+
+  try {
+    const user = await UserModel.findOne({ verificationToken: token });
+    if (!user) {
+      return res.status(400).json({ error: 'Invalid verification token' });
+    }
+
+    if (user.verificationTokenExpires < Date.now()) {
+      return res.status(400).json({ error: 'Verification token expired' });
+    }
+
+    user.isVerified = true;
+    user.verificationToken = undefined; // Remove token after verification
+    user.verificationTokenExpires = undefined; 
+    await user.save();
+
+    res.status(200).json({ message: 'Account verified successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'Error verifying account' });
+  }
+};
+
+const resendVerification = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const user = await UserModel.findOne({ email });
+    if (!user || user.isVerified) {
+      return res.status(400).json({ error: 'User already verified or does not exist' });
+    }
+
+    // Generate new token and send verification email
+    const token = generateVerificationToken();
+    user.verificationToken = token;
+    await user.save();
+
+    await sendVerificationEmail(user, token);
+    res.status(200).json({ message: 'Verification email sent' });
+  } catch (error) {
+    res.status(500).json({ error: 'Error resending verification email' });
+  }
+};
   
-module.exports = { registerUser, loginUser, getAllUsers }
+module.exports = { registerUser, loginUser, getAllUsers, verifyUser, resendVerification }

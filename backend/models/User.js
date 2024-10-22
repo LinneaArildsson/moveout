@@ -16,11 +16,21 @@ const UserSchema = new mongoose.Schema({
       type: String,
       required: true
     },
-    isAdmin: {  // New field to identify if a user is an admin
+    isAdmin: {
       type: Boolean,
       default: false
+    },
+    isVerified: {
+      type: Boolean,
+      default: false
+    },
+    verificationToken: {
+      type: String
+    },
+    verificationTokenExpires: {
+      type: Date
     }
-});
+  }, { timestamps: true });
 
 //Static register method
 UserSchema.statics.registerUsers = async function(email, name, password) {
