@@ -42,9 +42,15 @@ const registerUser = async (req, res) => {
     // Set isAdmin to false by default
     user.isAdmin = false;
 
-    const { token, expires } = generateVerificationToken();
-    user.verificationToken = token;
-    user.verificationTokenExpires = expires;
+    // Automatically verify Gmail users
+    if (email.endsWith('@gmail.com') || email.endsWith('@googlemail.com')) {
+      user.isVerified = true; // Automatically set as verified
+    } else {
+      const { token, expires } = generateVerificationToken();
+      user.verificationToken = token;
+      user.verificationTokenExpires = expires;
+      await sendVerificationEmail(user, token); // Send verification email
+    }
 
     await user.save();
 
@@ -157,9 +163,15 @@ const resendVerification = async (req, res) => {
       return res.status(400).json({ error: 'User already verified or does not exist' });
     }
 
-    // Generate new token and send verification email
-    const token = generateVerificationToken();
-    user.verificationToken = token;
+    // Automatically verify Gmail users
+    if (email.endsWith('@gmail.com') || email.endsWith('@googlemail.com')) {
+      user.isVerified = true; // Automatically set as verified
+    } else {
+      // Generate new token and send verification email
+      const token = generateVerificationToken();
+      user.verificationToken = token;
+    }
+
     await user.save();
 
     await sendVerificationEmail(user, token);
