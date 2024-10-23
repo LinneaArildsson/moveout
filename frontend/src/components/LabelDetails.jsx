@@ -18,13 +18,13 @@ const LabelDetails = ({label}) => {
     const getBorderColor = (design) => {
         switch (design) {
             case 'General':
-                return '2px solid blue';
+                return '4px solid blue';
             case 'Heavy':
-                return '2px solid red';
+                return '4px solid red';
             case 'Fragile':
-                return '2px solid green';
+                return '4px solid green';
             default:
-                return '2px solid gray';  // Default border color if no design is matched
+                return '4px solid gray';  // Default border color if no design is matched
         }
     };
 
