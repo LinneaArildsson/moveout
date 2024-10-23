@@ -100,9 +100,14 @@ const LabelDetails = ({label}) => {
                                     max-width: 100%;
                                     height: auto;
                                 }
+                                .design-image img {
+                                margin: 0 auto;
+                                max-width: 100px;
+                                height: auto;
+                                }
                                 @media print {
                                     .delete-icon {
-                                        display: none; /* Hide delete icon during print */
+                                        display: none;
                                     }
                                 }
                             </style>
