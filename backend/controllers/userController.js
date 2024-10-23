@@ -89,8 +89,6 @@ const getAllUsers = async (req, res) => {
     const usersWithLabels = await Promise.all(users.map(async (user) => {
       const labels = await LabelModel.find({ user_id: user._id }); // Assuming 'userId' is the reference field
       
-      console.log("Labels: ", labels);
-      
       const totalFileSize = labels.reduce((total, labels) => {
         return total + labels.totalFileSize; // Accumulate the total file size
       }, 0);
