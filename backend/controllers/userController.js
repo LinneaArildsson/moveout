@@ -105,6 +105,37 @@ const getAllUsers = async (req, res) => {
   }
 }
 
+const toggleIsActive = async (req, res) => {
+  const {id} = req.params;
+
+  if (!req.user.isAdmin) {
+    return res.status(403).json({error: 'Access denied'});
+  }
+
+  try {
+    // Fetch all users
+    const user = await UserModel.findById(id);
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Toggle active status
+    if(user.isActive){
+      user.isActive = false;
+    }
+    else {
+      user.isActive = true;
+    }
+
+    await user.save();
+
+    res.status(200).json({ message: 'User active status updated', isActive: user.isActive });
+  } catch (error) {
+    res.status(500).json({ error: 'Something went wrong' });
+  }
+}
+
 const generateVerificationToken = () => {
   const token = crypto.randomBytes(20).toString('hex');
   const expires = Date.now() + 24 * 60 * 60 * 1000; // Token expires in 24 hours
@@ -190,4 +221,4 @@ const resendVerification = async (req, res) => {
   }
 };
   
-module.exports = { registerUser, loginUser, getAllUsers, verifyUser, resendVerification }
+module.exports = { registerUser, loginUser, getAllUsers, verifyUser, resendVerification, toggleIsActive }

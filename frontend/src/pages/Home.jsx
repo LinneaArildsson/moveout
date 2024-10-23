@@ -18,6 +18,24 @@ export default function Home () {
   const [users, setUsers] = useState([]); // State for storing users
   const [error, setError] = useState(''); // State for error handling
 
+  // Function to toggle active status of a user
+  const toggleActiveStatus = async (userId) => {
+    try {
+      await axios.patch(
+        `https://moveout.onrender.com/user/${userId}/isactive`,
+        {},
+        {
+          headers: {
+            'Authorization': `Bearer ${user.token}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.error('Failed to update active status:', error);
+      setError('Failed to update active status');
+    }
+  };
+
   useEffect(() => {
     const fetchLabels = async () => {
         try {
@@ -72,8 +90,10 @@ export default function Home () {
               <tr>
                 <th>User Name</th>
                 <th>Email</th>
+                <th>Status (Active)</th>
                 <th>Storage Usage (Bytes)</th>
                 <th>Labels</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -81,6 +101,7 @@ export default function Home () {
                 <tr key={user._id}>
                   <td>{user.name || 'No name'}</td>
                   <td>{user.email}</td>
+                  <td>{user.isActive ? 'Active' : 'Inactive'}</td>
                   <td>{user.totalFileSize} Bytes</td>
                   <td>
                     <ul>
@@ -92,6 +113,13 @@ export default function Home () {
                         <li>No labels</li>
                       )}
                     </ul>
+                  </td>
+                  <td>
+                    <button
+                      onClick={() => toggleActiveStatus(user._id, user.isActive)}
+                    >
+                      {user.isActive ? 'Deactivate' : 'Activate'}
+                    </button>
                   </td>
                 </tr>
               ))}
