@@ -13,11 +13,11 @@ export default function PinInput({ labelId }) {
         enteredPin,
       });
       if (response.data.success) {
-        onSuccess(response.data.label); // Call the success callback with the label data
+        // onSuccess(response.data.label); // Call the success callback with the label data
       }
     } catch (err) {
       setError(err.response.data.error || 'Failed to verify PIN');
-      onError();
+      // onError();
     }
   };
 
