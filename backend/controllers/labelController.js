@@ -263,13 +263,14 @@ const verifyPin = async (req, res) => {
   try {
     const label = await LabelModel.findById(labelId);
     if (!label) {
-      return res.status(404).json({ error: 'Label not found' });
+        return res.status(404).json({ error: 'Label not found' });
     }
 
     if (label.isPrivate && label.pin === enteredPin) {
-      return res.status(200).json({ success: true, label });
+        console.log("YAY")
+        return res.status(200).json({ success: true, label });
     } else {
-      return res.status(403).json({ error: 'Invalid PIN' });
+        return res.status(403).json({ error: 'Invalid PIN' });
     }
   } catch (error) {
     res.status(500).json({ error: 'Server error' });
