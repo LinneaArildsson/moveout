@@ -207,16 +207,10 @@ const updateLabel = async (req, res) => {
     // Handle file uploads (multiple audio or image files)
     if (req.files) {
         if (req.files.imageFiles) {
-            imageFiles = req.files.imageFiles.map(file => {
-                totalFileSize += file.size; // Sum the sizes of image files
-                return file.path; // Store new image file paths
-            });
+            imageFiles = req.files.imageFiles.map(file => file.path); // Store new image file paths
         }
         if (req.files.audioFiles) {
-            audioFiles = req.files.audioFiles.map(file => {
-                totalFileSize += file.size; // Sum the sizes of audio files
-                return file.path; // Store new audio file paths
-            });
+            audioFiles = req.files.audioFiles.map(file => file.path); // Store new audio file paths
         }
     }
 
