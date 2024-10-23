@@ -22,7 +22,11 @@ export default function LabelForm () {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleOpenModal = () => setIsModalOpen(true);
+  const handleOpenModal = () => {
+    console.log(user.isVerified);
+    setIsModalOpen(user.isVerified);
+  }
+
   const handleCloseModal = () => {
     setTitle('');
     setDesign('');
@@ -103,7 +107,7 @@ export default function LabelForm () {
   return (
     <div className='label-form-container'>
       <button className="modal-button" onClick={handleOpenModal}>Create New Label</button>
-      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+      {isModalOpen && <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         <div className='create-label'><h2>Create New Label</h2></div>
         <form onSubmit={handleSubmit}>
           <label>Title:</label>
@@ -188,7 +192,7 @@ export default function LabelForm () {
           <button className="modal-button-add" type="submit">Add Label</button>
           {error && <div className="error">{error}</div>}
         </form>
-      </Modal>
+      </Modal>}
     </div>
   );
 };
