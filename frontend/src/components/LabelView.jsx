@@ -4,6 +4,10 @@ import axios from 'axios';
 
 import MultiMediaPlayer from './MultiMediaPlayer';
 
+import generalImg from '../style/storage.png';
+import heavyImg from '../style/heavy.png';
+import fragileImg from '../style/fragile.png';
+
 export default function LabelView() {
   const { id } = useParams(); // Get the label ID from the URL params
   const [label, setLabel] = useState(null);
@@ -20,7 +24,20 @@ export default function LabelView() {
         default:
             return '4px solid gray';
     }
-};
+  };
+
+  const getDesignImage = (design) => {
+    switch (design) {
+      case 'General':
+        return generalImg;
+      case 'Heavy':
+        return heavyImg;
+      case 'Fragile':
+        return fragileImg;
+      default:
+        return null;
+    }
+  };
 
   useEffect(() => {
     const fetchLabel = async () => {
@@ -53,6 +70,10 @@ export default function LabelView() {
       
       <div className="label-design">
         <strong>Design:</strong> <span>{label.design}</span>
+      </div>
+
+      <div className="design-image">
+        <img src={getDesignImage(label.design)} alt={label.design} style={{ maxWidth: '300px', marginTop: '20px' }} />
       </div>
 
       <div className="label-content">

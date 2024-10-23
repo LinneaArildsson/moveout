@@ -11,6 +11,10 @@ import MultiMediaPlayer from './MultiMediaPlayer';
 import deleteIcon from '../style/trash.png';
 import LabelEditModal from "./LabelEditModal";
 
+import generalImg from '../style/storage.png';
+import heavyImg from '../style/heavy.png';
+import fragileImg from '../style/fragile.png';
+
 const LabelDetails = ({label}) => {
     const {dispatch} = useLabelContext();
     const {user} = useAuthContext();
@@ -25,6 +29,19 @@ const LabelDetails = ({label}) => {
                 return '4px solid green';
             default:
                 return '4px solid gray';
+        }
+    };
+
+    const getDesignImage = (design) => {
+        switch (design) {
+          case 'General':
+            return generalImg;
+          case 'Heavy':
+            return heavyImg;
+          case 'Fragile':
+            return fragileImg;
+          default:
+            return null;
         }
     };
 
@@ -105,6 +122,10 @@ const LabelDetails = ({label}) => {
             <div className="label-details" style={{ border: getBorderColor(label.design) }}>
                 <h4>{label.title}</h4>
                 <p><strong>Design: </strong>{label.design}</p>
+                
+                <div className="design-image">
+                    <img src={getDesignImage(label.design)} alt={label.design} style={{ maxWidth: '300px', marginTop: '20px' }} />
+                </div>
 
                 {/* Displaying the content list */}
                 <p><strong>Content:</strong></p>
