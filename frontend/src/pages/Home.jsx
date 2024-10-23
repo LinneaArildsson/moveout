@@ -21,7 +21,7 @@ export default function Home () {
   // Function to toggle active status of a user
   const toggleActiveStatus = async (userId) => {
     try {
-      await axios.post(
+      await axios.patch(
         `https://moveout.onrender.com/admin/${userId}/isactive`,
         {},
         {
