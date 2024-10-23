@@ -15,6 +15,19 @@ const LabelDetails = ({label}) => {
     const {dispatch} = useLabelContext();
     const {user} = useAuthContext();
 
+    const getBorderColor = (design) => {
+        switch (design) {
+            case 'General':
+                return '2px solid blue';
+            case 'Heavy':
+                return '2px solid red';
+            case 'Fragile':
+                return '2px solid green';
+            default:
+                return '2px solid gray';  // Default border color if no design is matched
+        }
+    };
+
     const handleClick = async () => {
         if (!user) {
             return
@@ -88,7 +101,7 @@ const LabelDetails = ({label}) => {
     
 
     return (
-        <div className="label-container">
+        <div className="label-container" style={{ border: getBorderColor(label.design) }}>
             <div className="label-details">
                 <h4>{label.title}</h4>
                 <p><strong>Design: </strong>{label.design}</p>
