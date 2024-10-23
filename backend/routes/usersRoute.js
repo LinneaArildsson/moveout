@@ -15,7 +15,7 @@ router.post('/register', registerUser)
 // Admin route to get all users
 router.get('/admin', requireAuth, getAllUsers); // Protecting this route
 
-router.patch('/admin/:id/isactive', requireAuth, toggleIsActive); // Protecting this route
+router.post('/admin/:id/isactive', requireAuth, toggleIsActive); // Protecting this route
 
 router.get('/verify/:token', verifyUser);
 
