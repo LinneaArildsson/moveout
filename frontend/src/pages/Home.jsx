@@ -116,7 +116,7 @@ export default function Home () {
                   </td>
                   <td>
                     <button
-                      onClick={() => toggleActiveStatus(user._id, user.isActive)}
+                      onClick={() => toggleActiveStatus(user._id)}
                     >
                       {user.isActive ? 'Deactivate' : 'Activate'}
                     </button>
