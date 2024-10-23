@@ -103,96 +103,92 @@ export default function LabelForm () {
   return (
     <div className='label-form-container'>
       <button className="modal-button" onClick={handleOpenModal}>Create New Label</button>
-      {user && user.isVerified ? (
-        <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-          <div className='create-label'><h2>Create New Label</h2></div>
-          <form onSubmit={handleSubmit}>
-            <label>Title:</label>
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+        <div className='create-label'><h2>Create New Label</h2></div>
+        <form onSubmit={handleSubmit}>
+          <label>Title:</label>
+          <input
+            type="text"
+            onChange={(e) => setTitle(e.target.value)}
+            value={title}
+            className={emptyFields.includes('title') ? 'error' : ''}
+          />
+
+          <label>Select Design:</label>
+          <div className='radio-group'>
             <input
-              type="text"
-              onChange={(e) => setTitle(e.target.value)}
-              value={title}
-              className={emptyFields.includes('title') ? 'error' : ''}
+              type="radio"
+              value="General"
+              checked={design === 'General'}
+              onChange={() => setDesign('General')}
             />
+            <label>General</label>
+          </div>
+          <div className='radio-group'>
+            <input
+              type="radio"
+              value="Heavy"
+              checked={design === 'Heavy'}
+              onChange={() => setDesign('Heavy')}
+            />
+            <label>Heavy</label>
+          </div>
+          <div className='radio-group'>
+            <input
+              type="radio"
+              value="Fragile"
+              checked={design === 'Fragile'}
+              onChange={() => setDesign('Fragile')}
+            />
+            <label>Fragile</label>
+          </div>
 
-            <label>Select Design:</label>
-            <div className='radio-group'>
-              <input
-                type="radio"
-                value="General"
-                checked={design === 'General'}
-                onChange={() => setDesign('General')}
+          <label>Content Type:</label>
+          <select value={contentType} onChange={(e) => setContentType(e.target.value)}>
+            <option value="text">Text</option>
+            <option value="image">Image</option>
+            <option value="audio">Audio</option>
+          </select>
+
+          {contentType === 'text' && (
+            <div>
+              <label>Text List:</label>
+              <textarea
+                onChange={(e) => setTextList(e.target.value)}
+                value={textList}
+                className={emptyFields.includes('textList') ? 'error' : ''}
               />
-              <label>General</label>
             </div>
-            <div className='radio-group'>
+          )}
+
+          {contentType === 'image' && (
+            <div>
+              <label>Upload Images:</label>
               <input
-                type="radio"
-                value="Heavy"
-                checked={design === 'Heavy'}
-                onChange={() => setDesign('Heavy')}
+                type="file"
+                multiple
+                accept="image/*"
+                onChange={(e) => setImageFiles(e.target.files)}
               />
-              <label>Heavy</label>
             </div>
-            <div className='radio-group'>
+          )}
+
+          {contentType === 'audio' && (
+            <div>
+              <label>Upload Audio Files:</label>
               <input
-                type="radio"
-                value="Fragile"
-                checked={design === 'Fragile'}
-                onChange={() => setDesign('Fragile')}
+                type="file"
+                multiple
+                accept="audio/*"
+                onChange={(e) => setAudioFiles(e.target.files)}
               />
-              <label>Fragile</label>
             </div>
+          )}
 
-            <label>Content Type:</label>
-            <select value={contentType} onChange={(e) => setContentType(e.target.value)}>
-              <option value="text">Text</option>
-              <option value="image">Image</option>
-              <option value="audio">Audio</option>
-            </select>
-
-            {contentType === 'text' && (
-              <div>
-                <label>Text List:</label>
-                <textarea
-                  onChange={(e) => setTextList(e.target.value)}
-                  value={textList}
-                  className={emptyFields.includes('textList') ? 'error' : ''}
-                />
-              </div>
-            )}
-
-            {contentType === 'image' && (
-              <div>
-                <label>Upload Images:</label>
-                <input
-                  type="file"
-                  multiple
-                  accept="image/*"
-                  onChange={(e) => setImageFiles(e.target.files)}
-                />
-              </div>
-            )}
-
-            {contentType === 'audio' && (
-              <div>
-                <label>Upload Audio Files:</label>
-                <input
-                  type="file"
-                  multiple
-                  accept="audio/*"
-                  onChange={(e) => setAudioFiles(e.target.files)}
-                />
-              </div>
-            )}
-
-            <button className="modal-button-add" type="submit">Add Label</button>
-          </form>
-        </Modal>
-      ) : (
-        <p>You must verify your account to create labels.</p>
-      )}
-      {error && <div className="error">{error}</div>}
+          <button className="modal-button-add" type="submit">Add Label</button>
+          {error && <div className="error">{error}</div>}
+        </form>
+      </Modal>
     </div>
   );
 };
