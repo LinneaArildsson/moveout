@@ -81,7 +81,7 @@ export default function Home () {
                 <tr key={user._id}>
                   <td>{user.name || 'No name'}</td>
                   <td>{user.email}</td>
-                  <td>{user.labels.totalFileSize || 0} Bytes</td>
+                  <td>{user.totalFileSize || 0} Bytes</td>
                   <td>
                     <ul>
                       {user.labels && user.labels.length > 0 ? (
