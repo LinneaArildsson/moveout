@@ -124,7 +124,7 @@ const LabelDetails = ({label}) => {
                 <p><strong>Design: </strong>{label.design}</p>
                 
                 <div className="design-image">
-                    <img src={getDesignImage(label.design)} alt={label.design} style={{ maxWidth: '300px', marginTop: '20px' }} />
+                    <img src={getDesignImage(label.design)} alt={label.design} style={{ maxWidth: '30px', marginTop: '20px' }} />
                 </div>
 
                 {/* Displaying the content list */}
