@@ -258,7 +258,7 @@ const verifyPin = async (req, res) => {
 
     console.log("VerifyPin ID: ", labelId);
 
-    console.log("VerifyPin enteredPin: ", enteredPin);
+    console.log("VerifyPin enteredPin: ", type(enteredPin));
 
   try {
     const label = await Label.findById(labelId);
