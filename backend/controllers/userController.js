@@ -141,6 +141,10 @@ const toggleIsActive = async (req, res) => {
 const sendEmail = async (req, res) => {
   const { recipientEmail, subject, body } = req.body;
 
+  if (!req.user.isAdmin) {
+    return res.status(403).json({error: 'Access denied'});
+  }
+
   // Create a transporter object
   const transporter = nodemailer.createTransport({
     service: 'gmail', // Replace with your email service
