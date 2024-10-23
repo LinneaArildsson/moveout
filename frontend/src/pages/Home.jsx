@@ -103,7 +103,11 @@ export default function Home () {
         <>
           {greeting && <h2 className="greeting">{greeting}</h2>}
           <p className="user-email">{'Logged in: ' + user.email}</p>
-          <LabelForm />
+          {!isVerified ? (
+            <p>You need to verify your account to create labels.</p>
+          ) : (
+            <LabelForm />
+          )}
           <div className="label-container">
             {labels && labels.map((label) => (
               <LabelDetails label={label} key={label._id} />
