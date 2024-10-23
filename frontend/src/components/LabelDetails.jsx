@@ -101,8 +101,8 @@ const LabelDetails = ({label}) => {
     
 
     return (
-        <div className="label-container" style={{ border: getBorderColor(label.design) }}>
-            <div className="label-details">
+        <div className="label-container">
+            <div className="label-details" style={{ border: getBorderColor(label.design) }}>
                 <h4>{label.title}</h4>
                 <p><strong>Design: </strong>{label.design}</p>
 
