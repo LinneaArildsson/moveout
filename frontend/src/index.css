@@ -94,7 +94,7 @@ header a {
   color: var(--text);
 }
 
-.label-details ul{
+.label-list{
   color: var(--accent);
   margin-left: 2rem;
 }
