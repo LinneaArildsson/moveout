@@ -37,18 +37,23 @@ export default function EmailForm() {
     }
 
     try {
-      const response = await axios.post('https://moveout.onrender.com/user/admin/send-email', {
-        recipientEmail,
-        subject: emailSubject,
-        body: emailBody,
-      }, {
-        headers: {
-          'Authorization': `Bearer ${user.token}`,
-        },
-      });
+        const response = await axios.post('https://moveout.onrender.com/user/admin/send-email', {
+            recipientEmail,
+            subject: emailSubject,
+            body: emailBody,
+        }, {
+            headers: {
+            'Authorization': `Bearer ${user.token}`,
+            },
+        });
 
-      setSuccessMessage(response.data.message);
-      setError(null);
+        setSuccessMessage(response.data.message);
+        setError(null);
+        setRecipientEmail('');
+        setEmailSubject('');
+        setEmailBody('');
+
+        setIsModalOpen(false);
     } catch (error) {
       if (error.response) {
         setError(error.response.data.error);
