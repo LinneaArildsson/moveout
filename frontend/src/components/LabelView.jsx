@@ -67,7 +67,7 @@ export default function LabelView() {
 
   return (
     <div>
-      <PinInput />
+      <PinInput labelId={id}/>
       <div className="label-view-container" style={{ border: getBorderColor(label.design) }}>
         <h1>{label.title}</h1>
         <p>ID: {id}</p>
