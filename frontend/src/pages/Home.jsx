@@ -108,7 +108,7 @@ export default function Home () {
                       {user.labels && user.labels.length > 0 ? (
                         <p>{user.labels.length.toString()}</p>
                       ) : (
-                        <li>No labels</li>
+                        <p>No labels</p>
                       )}
                     </ul>
                   </td>
