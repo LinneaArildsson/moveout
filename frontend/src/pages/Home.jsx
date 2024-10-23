@@ -18,6 +18,21 @@ export default function Home () {
   const [users, setUsers] = useState([]); // State for storing users
   const [error, setError] = useState(''); // State for error handling
 
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get('https://moveout.onrender.com/user/admin', {
+        headers: {
+          'Authorization': `Bearer ${user.token}`,
+        },
+      });
+      console.log(response.data);
+      setUsers(response.data); // Store fetched users in state
+    } catch (error) {
+      console.error('Error fetching users:', error);
+      setError('Failed to fetch users'); // Handle error
+    }
+  };
+
   // Function to toggle active status of a user
   const toggleActiveStatus = async (userId) => {
     try {
@@ -53,20 +68,7 @@ export default function Home () {
         }
     };
 
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get('https://moveout.onrender.com/user/admin', {
-          headers: {
-            'Authorization': `Bearer ${user.token}`,
-          },
-        });
-        console.log(response.data);
-        setUsers(response.data); // Store fetched users in state
-      } catch (error) {
-        console.error('Error fetching users:', error);
-        setError('Failed to fetch users'); // Handle error
-      }
-    };
+    
     
     if (user) {
       const nameToUse = user.name || user.email; // Use name if available, else use email
