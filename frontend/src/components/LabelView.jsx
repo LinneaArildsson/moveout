@@ -4,6 +4,8 @@ import axios from 'axios';
 
 import MultiMediaPlayer from './MultiMediaPlayer';
 
+import PinInput from './PinInput';
+
 import generalImg from '../style/storage.png';
 import heavyImg from '../style/heavy.png';
 import fragileImg from '../style/fragile.png';
@@ -64,42 +66,45 @@ export default function LabelView() {
   }
 
   return (
-    <div className="label-view-container" style={{ border: getBorderColor(label.design) }}>
-      <h1>{label.title}</h1>
-      <p>ID: {id}</p>
-      
-      <div className="label-design">
-        <strong>Design:</strong> <span>{label.design}</span>
-      </div>
+    <div>
+      <PinInput />
+      <div className="label-view-container" style={{ border: getBorderColor(label.design) }}>
+        <h1>{label.title}</h1>
+        <p>ID: {id}</p>
+        
+        <div className="label-design">
+          <strong>Design:</strong> <span>{label.design}</span>
+        </div>
 
-      <div className="design-image" style={{ textAlign: 'center' }}>
-        <img 
-          src={getDesignImage(label.design)} 
-          alt={label.design} 
-          style={{ 
-            maxWidth: '40px',  // Adjust the size here
-            display: 'block',   // Block-level element for centering
-            margin: '10px auto' // Centers the image horizontally with auto margins
-          }} 
-        />
-      </div>
+        <div className="design-image" style={{ textAlign: 'center' }}>
+          <img 
+            src={getDesignImage(label.design)} 
+            alt={label.design} 
+            style={{ 
+              maxWidth: '40px',  // Adjust the size here
+              display: 'block',   // Block-level element for centering
+              margin: '10px auto' // Centers the image horizontally with auto margins
+            }} 
+          />
+        </div>
 
-      <div className="label-content">
-        <strong>Contents:</strong>
-        <ul className="label-list">
-          {label.textList.map((item, index) => (
-            <li key={index}>{item}</li>
-          ))}
-        </ul>
+        <div className="label-content">
+          <strong>Contents:</strong>
+          <ul className="label-list">
+            {label.textList.map((item, index) => (
+              <li key={index}>{item}</li>
+            ))}
+          </ul>
 
-        {/* Display audio and images */}
-        <MultiMediaPlayer 
-            mediaFiles={[...label.audioFiles, ...label.imageFiles]} 
-        />
-      </div>
+          {/* Display audio and images */}
+          <MultiMediaPlayer 
+              mediaFiles={[...label.audioFiles, ...label.imageFiles]} 
+          />
+        </div>
 
-      <div className="qr-code">
-        <img src={label.qrcode} alt="QR Code" />
+        <div className="qr-code">
+          <img src={label.qrcode} alt="QR Code" />
+        </div>
       </div>
     </div>
   );

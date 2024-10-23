@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-export default function PinInput({ labelId, onSuccess, onError }) {
+export default function PinInput({ labelId }) {
   const [enteredPin, setEnteredPin] = useState('');
   const [error, setError] = useState('');
 
