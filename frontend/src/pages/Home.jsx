@@ -22,7 +22,7 @@ export default function Home () {
   const toggleActiveStatus = async (userId) => {
     try {
       await axios.patch(
-        `https://moveout.onrender.com/admin/${userId}/isactive`,
+        `https://moveout.onrender.com/user/admin/${userId}/isactive`,
         {},
         {
           headers: {
