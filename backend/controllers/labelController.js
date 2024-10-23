@@ -261,7 +261,7 @@ const verifyPin = async (req, res) => {
     console.log("VerifyPin enteredPin: ", typeof(enteredPin));
 
   try {
-    const label = await Label.findById(labelId);
+    const label = await LabelModel.findById(labelId);
     if (!label) {
       return res.status(404).json({ error: 'Label not found' });
     }
