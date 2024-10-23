@@ -8,6 +8,7 @@ import {useAuthContext} from '../hooks/useAuthContext';
 //components
 import LabelDetails from '../components/LabelDetails';
 import LabelForm from '../components/LabelForm';
+import EmailForm from '../components/EmailForm';
 
 export default function Home () {
   const {labels, dispatch} = useLabelContext();
@@ -85,6 +86,7 @@ export default function Home () {
         <div>
           <h3>All Users and Their Labels</h3>
           {error && <p className="error">{error}</p>}
+          <EmailForm />
           <table>
             <thead>
               <tr>

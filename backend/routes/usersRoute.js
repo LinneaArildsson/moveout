@@ -17,6 +17,8 @@ router.get('/admin', requireAuth, getAllUsers); // Protecting this route
 
 router.patch('/admin/:id/isactive', requireAuth, toggleIsActive); // Protecting this route
 
+router.post('/admin/send-email', requireAuth, getAllUsers);
+
 router.get('/verify/:token', verifyUser);
 
 // Route for resending verification email

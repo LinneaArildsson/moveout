@@ -138,6 +138,33 @@ const toggleIsActive = async (req, res) => {
   }
 }
 
+const sendEmail = async (req, res) => {
+  const { recipientEmail, subject, body } = req.body;
+
+  // Create a transporter object
+  const transporter = nodemailer.createTransport({
+    service: 'gmail', // Replace with your email service
+    auth: {
+      user: process.env.EMAIL_USER, // Your email
+      pass: process.env.EMAIL_PASS, // Your email password or app password
+    },
+  });
+
+  const mailOptions = {
+    from: process.env.EMAIL_USER,
+    to: recipientEmail,
+    subject: subject,
+    text: body,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    res.status(200).json({ message: 'Email sent successfully!' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to send email.' });
+  }
+}
+
 const generateVerificationToken = () => {
   const token = crypto.randomBytes(20).toString('hex');
   const expires = Date.now() + 24 * 60 * 60 * 1000; // Token expires in 24 hours
