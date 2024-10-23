@@ -19,13 +19,14 @@ const loginUser = async (req, res) => {
   try{
     const user = await UserModel.loginUsers(email, password)
 
-    const token = createToken(user._id)
+    const token = createToken(user._id);
 
     res.status(200).json({
       email: user.email,
       name: user.name,
       token,
-      isAdmin: user.isAdmin
+      isAdmin: user.isAdmin,
+      isVerified: user.isVerified
     });
   } catch (error) {
     res.status(400).json({error: error.message})
