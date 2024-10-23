@@ -91,8 +91,8 @@ const getAllUsers = async (req, res) => {
       
       console.log("Labels: ", labels);
       
-      const totalFileSize = labels.reduce((total, label) => {
-        return total + label.totalFileSize; // Accumulate the total file size
+      const totalFileSize = labels.reduce((total, labels) => {
+        return total + labels.totalFileSize; // Accumulate the total file size
       }, 0);
       return { ...user.toObject(), labels, totalFileSize}; // Convert Mongoose object to plain JS object
     }));
