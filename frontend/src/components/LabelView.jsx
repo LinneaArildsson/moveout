@@ -15,6 +15,10 @@ export default function LabelView() {
   const [label, setLabel] = useState(null);
   const [error, setError] = useState(null);
 
+  const [pinRequired, setPinRequired] = useState(false); // To track if PIN is required
+  const [pinVerified, setPinVerified] = useState(false); // Track if PIN is verified
+  const [enteredPin, setEnteredPin] = useState(""); // Store the PIN entered by the user
+
   const getBorderColor = (design) => {
     switch (design) {
         case 'General':
@@ -41,6 +45,24 @@ export default function LabelView() {
     }
   };
 
+  const handlePinSubmit = async (pin) => {
+    try {
+      const response = await axios.post(`https://moveout.onrender.com/labels/verify-pin`, {
+        labelId: id,
+        enteredPin: pin
+      });
+      
+      if (response.data.success) {
+        setPinVerified(true); // Set pinVerified to true when the correct PIN is entered
+        setLabel(response.data.label); // Set the label data
+      } else {
+        setError("Invalid PIN. Please try again.");
+      }
+    } catch (error) {
+      setError('Error verifying PIN');
+    }
+  };
+
   useEffect(() => {
     const fetchLabel = async () => {
       try {
@@ -48,7 +70,11 @@ export default function LabelView() {
         // Replace with your QR code URL if needed
         const response = await axios.get(`https://moveout.onrender.com/labels/${id}`);
         console.log(response.data);
-        setLabel(response.data); // Set the fetched data to state
+        if (response.data.isPrivate) {
+          setPinRequired(true); // If the label is private, show PIN input
+        } else {
+          setLabel(response.data); // Set label if no PIN is needed
+        }
       } catch (error) {
         setError('Error fetching label data');
       }
@@ -61,13 +87,17 @@ export default function LabelView() {
     return <div>{error}</div>; // Display error if any
   }
 
+  if (pinRequired && !pinVerified) {
+    // If the label is private and PIN hasn't been verified, show the PIN input
+    return <PinInput onSubmit={handlePinSubmit} />;
+  }
+
   if (!label) {
     return <div>Loading...</div>; // Loading state while fetching data
   }
 
   return (
     <div>
-      <PinInput labelId={id}/>
       <div className="label-view-container" style={{ border: getBorderColor(label.design) }}>
         <h1>{label.title}</h1>
         <p>ID: {id}</p>
