@@ -9,6 +9,19 @@ export default function LabelView() {
   const [label, setLabel] = useState(null);
   const [error, setError] = useState(null);
 
+  const getBorderColor = (design) => {
+    switch (design) {
+        case 'General':
+            return '4px solid blue';
+        case 'Heavy':
+            return '4px solid red';
+        case 'Fragile':
+            return '4px solid green';
+        default:
+            return '4px solid gray';
+    }
+};
+
   useEffect(() => {
     const fetchLabel = async () => {
       try {
@@ -34,7 +47,7 @@ export default function LabelView() {
   }
 
   return (
-    <div className="label-view-container">
+    <div className="label-view-container" style={{ border: getBorderColor(label.design) }}>
       <h1>{label.title}</h1>
       <p>ID: {id}</p>
       

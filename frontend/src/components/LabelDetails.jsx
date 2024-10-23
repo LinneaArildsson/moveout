@@ -24,7 +24,7 @@ const LabelDetails = ({label}) => {
             case 'Fragile':
                 return '4px solid green';
             default:
-                return '4px solid gray';  // Default border color if no design is matched
+                return '4px solid gray';
         }
     };
 
