@@ -108,12 +108,14 @@ const getAllUsers = async (req, res) => {
 const toggleIsActive = async (req, res) => {
   const {id} = req.params;
 
+  console.log("ID: ", id);
+
   if (!req.user.isAdmin) {
     return res.status(403).json({error: 'Access denied'});
   }
 
   try {
-    // Fetch all users
+    // Fetch user
     const user = await UserModel.findById(id);
 
     if (!user) {
