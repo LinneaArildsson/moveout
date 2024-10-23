@@ -30,6 +30,7 @@ export default function Home () {
           },
         }
       );
+      fetchUsers(); // Re-fetch the users to get the updated status
     } catch (error) {
       console.error('Failed to update active status:', error);
       setError('Failed to update active status');
