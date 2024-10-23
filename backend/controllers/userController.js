@@ -250,4 +250,4 @@ const resendVerification = async (req, res) => {
   }
 };
   
-module.exports = { registerUser, loginUser, getAllUsers, verifyUser, resendVerification, toggleIsActive }
+module.exports = { registerUser, loginUser, getAllUsers, verifyUser, resendVerification, toggleIsActive, sendEmail }

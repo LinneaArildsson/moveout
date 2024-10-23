@@ -1,6 +1,6 @@
 const express = require('express')
 
-const { loginUser, registerUser, getAllUsers, verifyUser, resendVerification, toggleIsActive } = require('../controllers/userController')
+const { loginUser, registerUser, getAllUsers, verifyUser, resendVerification, toggleIsActive, sendEmail } = require('../controllers/userController')
 const requireAuth = require('../middleware/requireAuth'); // Ensure you have this middleware for authorization
 
 
@@ -17,7 +17,7 @@ router.get('/admin', requireAuth, getAllUsers); // Protecting this route
 
 router.patch('/admin/:id/isactive', requireAuth, toggleIsActive); // Protecting this route
 
-router.post('/admin/send-email', requireAuth, getAllUsers);
+router.post('/admin/send-email', requireAuth, sendEmail);
 
 router.get('/verify/:token', verifyUser);
 
