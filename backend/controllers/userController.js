@@ -89,11 +89,7 @@ const getAllUsers = async (req, res) => {
     const usersWithLabels = await Promise.all(users.map(async (user) => {
       const labels = await LabelModel.find({ user_id: user._id }); // Assuming 'userId' is the reference field
       const totalStorageUsage = labels.reduce((total, label) => total + label.totalFileSize, 0);
-      return {
-        userId: user._id,
-        email: user.email, // Include any other user details you want
-        totalStorageUsage // Storage in bytes
-    };
+      return { ...user.toObject(), labels, totalStorageUsage }; // Convert Mongoose object to plain JS object
     }));
 
     res.status(200).json(usersWithLabels);
