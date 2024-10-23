@@ -70,46 +70,67 @@ const LabelDetails = ({label}) => {
     
         // Create an image to preload the QR code
         const qrCodeImage = new Image();
+        const designImage = new Image();
         qrCodeImage.src = qrCodeSrc;
-    
+        designImage.src = getDesignImage(label.design);
+
         qrCodeImage.onload = () => {
-            printWindow.document.write(`
-                <html>
-                    <head>
-                        <title>${label.title}</title>
-                        <style>
-                            body {
-                                font-family: Arial, sans-serif;
-                                margin: 20px;
-                            }
-                            .label-container {
-                                text-align: center; /* Center align the content */
-                            }
-                            .qr-code {
-                                margin: 20px 0;
-                            }
-                            @media print {
-                                .delete-icon {
-                                    display: none; /* Hide delete icon during print */
+            designImage.onload = () => {
+                // When both images are loaded, print the content
+                printWindow.document.write(`
+                    <html>
+                        <head>
+                            <title>${label.title}</title>
+                            <style>
+                                body {
+                                    font-family: Arial, sans-serif;
+                                    margin: 20px;
+                                    text-align: center;
                                 }
-                            }
-                        </style>
-                    </head>
-                    <body>
-                        <div class="label-container">
-                            <h1>${label.title}</h1>
-                            <h2>${label.design}</h2>
-                            <div class="qr-code">
-                                <img src="${qrCodeSrc}" alt="QR Code" />
+                                .label-container {
+                                    border: 5px solid ${label.design === 'design1' ? 'blue' : label.design === 'design2' ? 'green' : 'red'};
+                                    padding: 20px;
+                                    border-radius: 8px;
+                                    margin-bottom: 20px;
+                                }
+                                .design-image, .qr-code {
+                                    margin: 20px 0;
+                                }
+                                img {
+                                    max-width: 100%;
+                                    height: auto;
+                                }
+                                @media print {
+                                    .delete-icon {
+                                        display: none; /* Hide delete icon during print */
+                                    }
+                                }
+                            </style>
+                        </head>
+                        <body>
+                            <div class="label-container">
+                                <h1>${label.title}</h1>
+                                <h2>${label.design}</h2>
+                                <div class="design-image">
+                                    <img src="${designImage.src}" alt="Design Image" />
+                                </div>
+                                <div class="qr-code">
+                                    <img src="${qrCodeSrc}" alt="QR Code" />
+                                </div>
                             </div>
-                        </div>
-                    </body>
-                </html>
-            `);
-            printWindow.document.close();
-            printWindow.print();
+                        </body>
+                    </html>
+                `);
+                printWindow.document.close();
+                printWindow.print();
+            };
+
+            designImage.onerror = () => {
+                console.error('Error loading design image');
+                printWindow.close(); // Close the window if the image fails to load
+            };
         };
-    
+
         qrCodeImage.onerror = () => {
             console.error('Error loading QR code image');
             printWindow.close(); // Close the window if the image fails to load
