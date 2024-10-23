@@ -106,9 +106,7 @@ export default function Home () {
                   <td>
                     <ul>
                       {user.labels && user.labels.length > 0 ? (
-                        user.labels.map((label) => (
-                          <li key={label._id}>{label.title || 'No title'}</li>
-                        ))
+                        <p>{user.labels.length.toString()}</p>
                       ) : (
                         <li>No labels</li>
                       )}
