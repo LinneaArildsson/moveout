@@ -41,7 +41,7 @@ const LabelDetails = ({label}) => {
           case 'Fragile':
             return fragileImg;
           default:
-            return null;
+            return '';
         }
     };
 
@@ -88,7 +88,7 @@ const LabelDetails = ({label}) => {
                                     text-align: center;
                                 }
                                 .label-container {
-                                    border: 5px solid ${label.design === 'design1' ? 'blue' : label.design === 'design2' ? 'green' : 'red'};
+                                    border: 5px solid ${label.design === 'General' ? 'blue' : label.design === 'Fragile' ? 'green' : 'red'};
                                     padding: 20px;
                                     border-radius: 8px;
                                     margin-bottom: 20px;
@@ -145,7 +145,7 @@ const LabelDetails = ({label}) => {
                 <p><strong>Design: </strong>{label.design}</p>
                 
                 <div className="design-image">
-                    <img src={getDesignImage(label.design)} alt={label.design} style={{ maxWidth: '30px', marginTop: '20px' }} />
+                    <img src={getDesignImage(label.design)} alt={label.design} style={{ maxWidth: '40px', marginTop: '10px' }} />
                 </div>
 
                 {/* Displaying the content list */}
