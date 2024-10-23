@@ -72,8 +72,16 @@ export default function LabelView() {
         <strong>Design:</strong> <span>{label.design}</span>
       </div>
 
-      <div className="design-image">
-        <img src={getDesignImage(label.design)} alt={label.design} style={{ maxWidth: '40px', marginTop: '10px', margin: '0 auto' }} />
+      <div className="design-image" style={{ textAlign: 'center' }}>
+        <img 
+          src={getDesignImage(label.design)} 
+          alt={label.design} 
+          style={{ 
+            maxWidth: '40px',  // Adjust the size here
+            display: 'block',   // Block-level element for centering
+            margin: '10px auto' // Centers the image horizontally with auto margins
+          }} 
+        />
       </div>
 
       <div className="label-content">

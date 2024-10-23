@@ -149,8 +149,16 @@ const LabelDetails = ({label}) => {
                 <h4>{label.title}</h4>
                 <p><strong>Design: </strong>{label.design}</p>
                 
-                <div className="design-image">
-                    <img src={getDesignImage(label.design)} alt={label.design} style={{ maxWidth: '40px', marginTop: '10px', margin: '0 auto' }} />
+                <div className="design-image" style={{ textAlign: 'center' }}>
+                    <img 
+                    src={getDesignImage(label.design)} 
+                    alt={label.design} 
+                    style={{ 
+                        maxWidth: '40px',  // Adjust the size here
+                        display: 'block',   // Block-level element for centering
+                        margin: '10px auto' // Centers the image horizontally with auto margins
+                    }} 
+                    />
                 </div>
 
                 {/* Displaying the content list */}
