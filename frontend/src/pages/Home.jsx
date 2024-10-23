@@ -103,8 +103,8 @@ export default function Home () {
         <>
           {greeting && <h2 className="greeting">{greeting}</h2>}
           <p className="user-email">{'Logged in: ' + user.email}</p>
-          {!user.isVerified ? (
-            <p>You need to verify your account to create labels.</p>
+          {!user.isVerified && !user.isActive ? (
+            <p>You need to have a verified and active account to create labels.</p>
           ) : (
             <LabelForm />
           )}

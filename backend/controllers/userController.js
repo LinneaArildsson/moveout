@@ -26,7 +26,8 @@ const loginUser = async (req, res) => {
       name: user.name,
       token,
       isAdmin: user.isAdmin,
-      isVerified: user.isVerified
+      isVerified: user.isVerified,
+      isActive: user.isActive
     });
   } catch (error) {
     res.status(400).json({error: error.message})
@@ -66,7 +67,8 @@ const registerUser = async (req, res) => {
       name: user.name,
       token: jwttoken,
       isAdmin: user.isAdmin,
-      isVerified: user.isVerified
+      isVerified: user.isVerified,
+      isActive: true
     });
   } catch (error) {
     console.log("REGISTER ERROR: ", error.message)
