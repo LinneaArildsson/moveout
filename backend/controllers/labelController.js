@@ -256,6 +256,10 @@ const updateLabel = async (req, res) => {
 const verifyPin = async (req, res) => {
     const { labelId, enteredPin } = req.body;
 
+    console.log("VerifyPin ID: ", labelId);
+
+    console.log("VerifyPin enteredPin: ", enteredPin);
+
   try {
     const label = await Label.findById(labelId);
     if (!label) {
