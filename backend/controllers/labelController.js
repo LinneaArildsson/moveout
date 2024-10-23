@@ -94,14 +94,21 @@ const createLabel = async (req, res) => {
     let imageFiles = [];
     let audioFiles = [];
     let textContent = [];
+    let totalFileSize = 0;
 
     // Handle file uploads (multiple audio or image files)
     if (req.files) {
         if (req.files.imageFiles) {
-            imageFiles = req.files.imageFiles.map(file => file.path); // Store image file paths
+            imageFiles = req.files.imageFiles.map(file => {
+                totalFileSize += file.size; // Sum the sizes of image files
+                return file.path; // Store image file paths
+            });
         }
         if (req.files.audioFiles) {
-            audioFiles = req.files.audioFiles.map(file => file.path); // Store audio file paths
+            audioFiles = req.files.audioFiles.map(file => {
+                totalFileSize += file.size; // Sum the sizes of audio files
+                return file.path; // Store audio file paths
+            });
         }
     }
 
@@ -135,7 +142,8 @@ const createLabel = async (req, res) => {
             textList: textContent,
             imageFiles,
             audioFiles,
-            user_id
+            user_id,
+            totalFileSize
         });
 
         const qrurl = `https://moveoutapp.onrender.com/#/labels/${label._id}`;
@@ -180,6 +188,7 @@ const updateLabel = async (req, res) => {
     // Initialize variables to store updated data
     const updates = {};
     const { title, design, contentType, textList } = req.body;
+    let totalFileSize = 0;
 
     // Check for updates in title, design, and content type
     if (title) updates.title = title;
@@ -198,10 +207,16 @@ const updateLabel = async (req, res) => {
     // Handle file uploads (multiple audio or image files)
     if (req.files) {
         if (req.files.imageFiles) {
-            imageFiles = req.files.imageFiles.map(file => file.path); // Store new image file paths
+            imageFiles = req.files.imageFiles.map(file => {
+                totalFileSize += file.size; // Sum the sizes of image files
+                return file.path; // Store new image file paths
+            });
         }
         if (req.files.audioFiles) {
-            audioFiles = req.files.audioFiles.map(file => file.path); // Store new audio file paths
+            audioFiles = req.files.audioFiles.map(file => {
+                totalFileSize += file.size; // Sum the sizes of audio files
+                return file.path; // Store new audio file paths
+            });
         }
     }
 
@@ -212,6 +227,11 @@ const updateLabel = async (req, res) => {
 
     if (audioFiles.length > 0) {
         updates.audioFiles = audioFiles; // Replace with new files if uploaded
+    }
+
+    // Update total file size
+    if (totalFileSize > 0) {
+        updates.totalFileSize = totalFileSize;
     }
 
     try {

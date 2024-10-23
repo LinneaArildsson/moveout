@@ -72,6 +72,7 @@ export default function Home () {
               <tr>
                 <th>User Name</th>
                 <th>Email</th>
+                <th>Storage Usage (Bytes)</th>
                 <th>Labels</th>
               </tr>
             </thead>
@@ -80,6 +81,7 @@ export default function Home () {
                 <tr key={user._id}>
                   <td>{user.name || 'No name'}</td>
                   <td>{user.email}</td>
+                  <td>{user.totalStorageUsage || 0} Bytes</td>
                   <td>
                     <ul>
                       {user.labels && user.labels.length > 0 ? (

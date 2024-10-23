@@ -18,6 +18,10 @@ const LabelSchema = new mongoose.Schema({
     user_id: {
         type: String,
         required: true
+    },
+    totalFileSize: { // Field to store file size
+        type: Number, // Size in bytes
+        required: true
     }
 }, {timestamps: true});
 
