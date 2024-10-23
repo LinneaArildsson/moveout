@@ -70,22 +70,23 @@ export default function LabelView() {
       
       <div className="label-design">
         <strong>Design:</strong> <span>{label.design}</span>
-        <div className="design-image" style={{ textAlign: 'center' }}>
-          <img 
-            src={getDesignImage(label.design)} 
-            alt={label.design} 
-            style={{ 
-              maxWidth: '40px',  // Adjust the size here
-              display: 'block',   // Block-level element for centering
-              margin: '10px auto' // Centers the image horizontally with auto margins
-            }} 
-          />
-        </div>
+      </div>
+
+      <div className="design-image" style={{ textAlign: 'center' }}>
+        <img 
+          src={getDesignImage(label.design)} 
+          alt={label.design} 
+          style={{ 
+            maxWidth: '40px',  // Adjust the size here
+            display: 'block',   // Block-level element for centering
+            margin: '10px auto' // Centers the image horizontally with auto margins
+          }} 
+        />
       </div>
 
       <div className="label-content">
         <strong>Contents:</strong>
-        <ul>
+        <ul className="label-list">
           {label.textList.map((item, index) => (
             <li key={index}>{item}</li>
           ))}
