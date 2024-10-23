@@ -19,6 +19,7 @@ export default function LabelForm () {
   const [audioFiles, setAudioFiles] = useState([]); // For multiple audio files
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
+  const [isPrivate, setIsPrivate] = useState(false);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -33,6 +34,7 @@ export default function LabelForm () {
     setTextList('');
     setImageFiles([]);
     setAudioFiles([]);
+    setIsPrivate(false);
     setIsModalOpen(false);
   }
 
@@ -49,6 +51,7 @@ export default function LabelForm () {
     formData.append('title', title);
     formData.append('design', design);
     formData.append('contentType', contentType);
+    formData.append('isPrivate', isPrivate);
 
     if (contentType === 'text') {
       formData.append('textList', textList);
@@ -82,6 +85,7 @@ export default function LabelForm () {
       setTextList('');
       setImageFiles([]);
       setAudioFiles([]);
+      setIsPrivate(false);
       setEmptyFields([]);
       console.log('New label added:', response.data);
       dispatch({type: 'CREATE_LABEL', payload: response.data});
@@ -146,6 +150,16 @@ export default function LabelForm () {
             />
             <label>Fragile</label>
           </div>
+
+          <label>
+            <input
+              type="checkbox"
+              checked={isPrivate}
+              onChange={(e) => setIsPrivate(e.target.checked)}
+            />
+            Mark as Private
+          </label>
+
 
           <label>Content Type:</label>
           <select value={contentType} onChange={(e) => setContentType(e.target.value)}>

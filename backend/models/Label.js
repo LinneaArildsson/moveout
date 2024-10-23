@@ -22,6 +22,13 @@ const LabelSchema = new mongoose.Schema({
     totalFileSize: { // Field to store file size
         type: Number, // Size in bytes
         required: true
+    },
+    isPrivate: {
+        type: Boolean,
+        required: false
+    },
+    pin: {
+        type: String
     }
 }, {timestamps: true});
 

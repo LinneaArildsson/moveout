@@ -5,7 +5,8 @@ const {
     createLabel,
     deleteLabel,
     updateLabel,
-    multipleUpload // Import multer multiple upload middleware
+    multipleUpload,
+    verifyPin
 } = require('../controllers/labelController');
 const requireAuth = require('../middleware/requireAuth');
 
@@ -13,6 +14,8 @@ const router = express.Router();
 
 // Public route: GET a single label (for QR code scanning)
 router.get('/:id', getLabel);
+
+router.post('verify-pin', verifyPin);
 
 // Routes that require authentication
 router.use(requireAuth);

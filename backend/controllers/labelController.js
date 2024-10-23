@@ -46,6 +46,10 @@ const upload = multer({
 // Upload multiple files for both image and audio
 const multipleUpload = upload.fields([{ name: 'imageFiles', maxCount: 5 }, { name: 'audioFiles', maxCount: 5 }]);
 
+// Function to generate a random 6-digit PIN
+const generatePin = () => {
+    return Math.floor(100000 + Math.random() * 900000).toString();
+};
 
 //Get all labels
 const getLabels = async (req, res) => {
@@ -78,10 +82,16 @@ const getLabel = async (req, res) => {
 
 //Create new label
 const createLabel = async (req, res) => {
-    const {title, design, contentType, textList } = req.body
+    const {title, design, contentType, textList, isPrivate } = req.body
 
     if (!req.user) {
         return res.status(401).json({ error: 'You must be logged in' });
+    }
+
+    let pin = null;
+
+    if(isPrivate) {
+        pin = generatePin();
     }
 
     let emptyFields = [];
@@ -143,7 +153,9 @@ const createLabel = async (req, res) => {
             imageFiles,
             audioFiles,
             user_id,
-            totalFileSize
+            totalFileSize,
+            isPrivate,
+            pin
         });
 
         const qrurl = `https://moveoutapp.onrender.com/#/labels/${label._id}`;
@@ -241,6 +253,25 @@ const updateLabel = async (req, res) => {
     }
 };
 
+const verifyPin = async (req, res) => {
+    const { labelId, enteredPin } = req.body;
+
+  try {
+    const label = await Label.findById(labelId);
+    if (!label) {
+      return res.status(404).json({ error: 'Label not found' });
+    }
+
+    if (label.isPrivate && label.pin === enteredPin) {
+      return res.status(200).json({ success: true, label });
+    } else {
+      return res.status(403).json({ error: 'Invalid PIN' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+}
+
 
 module.exports = {
     getLabels,
@@ -248,5 +279,6 @@ module.exports = {
     createLabel,
     deleteLabel,
     updateLabel,
-    multipleUpload // Import multer multiple upload middleware
+    multipleUpload,
+    verifyPin
 }
