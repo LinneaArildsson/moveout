@@ -101,9 +101,9 @@ const LabelDetails = ({label}) => {
                                     height: auto;
                                 }
                                 .design-image img {
-                                margin: 0 auto;
-                                max-width: 100px;
-                                height: auto;
+                                    margin: 0 auto;
+                                    max-width: 100px;
+                                    height: auto;
                                 }
                                 @media print {
                                     .delete-icon {
@@ -150,7 +150,7 @@ const LabelDetails = ({label}) => {
                 <p><strong>Design: </strong>{label.design}</p>
                 
                 <div className="design-image">
-                    <img src={getDesignImage(label.design)} alt={label.design} style={{ maxWidth: '40px', marginTop: '10px' }} />
+                    <img src={getDesignImage(label.design)} alt={label.design} style={{ maxWidth: '40px', marginTop: '10px', margin: '0 auto' }} />
                 </div>
 
                 {/* Displaying the content list */}

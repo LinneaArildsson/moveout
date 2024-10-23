@@ -73,7 +73,7 @@ export default function LabelView() {
       </div>
 
       <div className="design-image">
-        <img src={getDesignImage(label.design)} alt={label.design} style={{ maxWidth: '40px', marginTop: '10px' }} />
+        <img src={getDesignImage(label.design)} alt={label.design} style={{ maxWidth: '40px', marginTop: '10px', margin: '0 auto' }} />
       </div>
 
       <div className="label-content">
