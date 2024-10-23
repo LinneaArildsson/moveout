@@ -103,7 +103,7 @@ export default function Home () {
         <>
           {greeting && <h2 className="greeting">{greeting}</h2>}
           <p className="user-email">{'Logged in: ' + user.email}</p>
-          <p className="user-email">Verified: {user.isVerified.toString()}</p>
+          <p className="user-email">Verified: {user.isVerified.toString()} Active: {user.isActive.toString()}</p>
           {(!user.isVerified || !user.isActive) ? (
             <p>You need to have a verified and active account to create labels.</p>
           ) : (
