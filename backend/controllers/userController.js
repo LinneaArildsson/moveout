@@ -239,19 +239,21 @@ const resendVerification = async (req, res) => {
     // Automatically verify Gmail users
     if (email.endsWith('@gmail.com') || email.endsWith('@googlemail.com')) {
       user.isVerified = true; // Automatically set as verified
+      await user.save();
+      return res.status(200).json({ message: 'Gmail user automatically verified' });
     } else {
-      // Generate new token and send verification email
+      // Generate new token and send verification email for non-Gmail users
       const token = generateVerificationToken();
       user.verificationToken = token;
+      await user.save();
+
+      await sendVerificationEmail(user, token);
+      return res.status(200).json({ message: 'Verification email sent' });
     }
-
-    await user.save();
-
-    await sendVerificationEmail(user, token);
-    res.status(200).json({ message: 'Verification email sent' });
   } catch (error) {
     res.status(500).json({ error: 'Error resending verification email' });
   }
 };
+
   
 module.exports = { registerUser, loginUser, getAllUsers, verifyUser, resendVerification, toggleIsActive, sendEmail }

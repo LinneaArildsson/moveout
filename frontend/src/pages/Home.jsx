@@ -19,6 +19,22 @@ export default function Home () {
   const [users, setUsers] = useState([]); // State for storing users
   const [error, setError] = useState(''); // State for error handling
 
+  const [resendMessage, setResendMessage] = useState(''); // State for showing resend message
+
+  // Function to resend verification email
+  const resendVerification = async () => {
+    try {
+      const response = await axios.post(
+        'https://moveout.onrender.com/user/resend-verification',
+        { email: user.email } // Pass the current user's email
+      );
+      setResendMessage(response.data.message); // Display success message
+    } catch (error) {
+      console.error('Error resending verification email:', error);
+      setResendMessage('Failed to resend verification email.'); // Display error message
+    }
+  };
+
   // Function to toggle active status of a user
   const toggleActiveStatus = async (userId) => {
     try {
@@ -133,8 +149,14 @@ export default function Home () {
           <p className="user-email">{'Logged in: ' + user.email}</p>
           <p className="user-email">Verified: {user.isVerified ? 'Yes' : 'No'}</p>
           <p className="user-email">Active: {user.isActive ? 'Yes' : 'No'}</p>
+          {resendMessage && <p>{resendMessage}</p>}
           {(!user.isVerified || !user.isActive) ? (
-            <p>You need to have a verified and active account to create labels.</p>
+            <>
+              <p>You need to have a verified and active account to create labels.</p>
+              {!user.isVerified && (
+                <button onClick={resendVerification}>Resend Verification Email</button>
+              )}
+            </>
           ) : (
             <LabelForm />
           )}
