@@ -102,8 +102,8 @@ export default function LabelView() {
         <h1>{label.title}</h1>
         <p>ID: {id}</p>
 
-        <p>Is it private: {label.isPrivate.toString()}</p>
-        <p>PIN: {label.pin}</p>
+        <p>Visability: {label.isPrivate ? 'Private' : 'Public'}</p>
+        <p>PIN: {label.isPrivate ? label.pin : 'Not needed'}</p>
         
         <div className="label-design">
           <strong>Design:</strong> <span>{label.design}</span>

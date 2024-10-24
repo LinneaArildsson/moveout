@@ -149,7 +149,7 @@ const LabelDetails = ({label}) => {
                 <h4>{label.title}</h4>
 
                 <p>Visability: {label.isPrivate ? 'Private' : 'Public'}</p>
-                <p>PIN: {label.pin}</p>
+                <p>PIN: {label.isPrivate ? label.pin : 'Not needed'}</p>
 
                 <p><strong>Design: </strong>{label.design}</p>
                 
