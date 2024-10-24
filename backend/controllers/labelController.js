@@ -199,13 +199,14 @@ const updateLabel = async (req, res) => {
 
     // Initialize variables to store updated data
     const updates = {};
-    const { title, design, contentType, textList } = req.body;
+    const { title, design, contentType, textList, isPrivate } = req.body;
     let totalFileSize = 0;
 
     // Check for updates in title, design, and content type
     if (title) updates.title = title;
     if (design) updates.design = design;
     if (contentType) updates.contentType = contentType;
+    if (typeof isPrivate !== 'undefined') updates.isPrivate = isPrivate;
 
     // Handle text list if provided
     if (contentType === 'text' && textList) {

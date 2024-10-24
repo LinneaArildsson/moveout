@@ -19,7 +19,7 @@ export default function LabelEditModal({ label }) {
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isPrivate, setIsPrivate] = useState(false);
+  const [isPrivate, setIsPrivate] = useState(label.isPrivate);
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => {
