@@ -100,7 +100,6 @@ export default function LabelView() {
     <div>
       <div className="label-view-container" style={{ border: getBorderColor(label.design) }}>
         <h1>{label.title}</h1>
-        <p>ID: {id}</p>
 
         <p><strong>Visability: </strong>{label.isPrivate ? 'Private' : 'Public'}</p>
         <p><strong>PIN: </strong>{label.isPrivate ? label.pin : 'Not needed'}</p>
