@@ -149,6 +149,7 @@ const LabelDetails = ({label}) => {
                 <h4>{label.title}</h4>
 
                 <p>Is it private: {label.isPrivate.toString()}</p>
+                <p>PIN: {label.pin}</p>
 
                 <p><strong>Design: </strong>{label.design}</p>
                 
