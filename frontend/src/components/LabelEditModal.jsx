@@ -19,6 +19,7 @@ export default function LabelEditModal({ label }) {
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPrivate, setIsPrivate] = useState(false);
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => {
@@ -37,6 +38,7 @@ export default function LabelEditModal({ label }) {
     formData.append('title', title);
     formData.append('design', design);
     formData.append('contentType', contentType);
+    formData.append('isPrivate', isPrivate);
 
     if (contentType === 'text') {
       formData.append('textList', textList.split('\n')); // Convert text to array
@@ -106,6 +108,15 @@ export default function LabelEditModal({ label }) {
               </div>
             ))}
           </div>
+
+          <label>
+            <input
+              type="checkbox"
+              checked={isPrivate}
+              onChange={(e) => setIsPrivate(e.target.checked)}
+            />
+            Mark as Private
+          </label>
 
           <label>Content Type:</label>
           <select value={contentType} onChange={(e) => setContentType(e.target.value)}>
