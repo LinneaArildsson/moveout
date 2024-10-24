@@ -243,8 +243,9 @@ const resendVerification = async (req, res) => {
       return res.status(200).json({ message: 'Gmail user automatically verified' });
     } else {
       // Generate new token and send verification email for non-Gmail users
-      const token = generateVerificationToken();
+      const { token, expires } = generateVerificationToken();
       user.verificationToken = token;
+      user.verificationTokenExpires = expires;
       await user.save();
 
       await sendVerificationEmail(user, token);
