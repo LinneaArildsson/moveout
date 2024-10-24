@@ -147,6 +147,9 @@ const LabelDetails = ({label}) => {
         <div className="label-container">
             <div className="label-details" style={{ border: getBorderColor(label.design) }}>
                 <h4>{label.title}</h4>
+
+                <p>Is it private: {label.isPrivate}</p>
+
                 <p><strong>Design: </strong>{label.design}</p>
                 
                 <div className="design-image" style={{ textAlign: 'center' }}>
