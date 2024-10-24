@@ -148,7 +148,7 @@ const LabelDetails = ({label}) => {
             <div className="label-details" style={{ border: getBorderColor(label.design) }}>
                 <h4>{label.title}</h4>
 
-                <p>Is it private: {label.isPrivate}</p>
+                <p>Is it private: {label.isPrivate.toString()}</p>
 
                 <p><strong>Design: </strong>{label.design}</p>
                 
