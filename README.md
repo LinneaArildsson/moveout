@@ -12,7 +12,7 @@ The MoveOut Application is a web-based tool designed to streamline the organizat
 - Option to create public or private labels.
 - Scanning a QR code to view content without needing to log in.
 
-TODO: Add an image that helps to understand the project. This could be an architectural diagram or a screenshot of the application.
+![Application Screenshot](frontend/src/style/start.png)
 
 ## Architecture Overview
 
